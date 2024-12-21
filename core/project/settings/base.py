@@ -32,7 +32,11 @@ INSTALLED_APPS = [
     'import_export',
     'maintenance_mode',
     # app
-
+    'core.blog.apps.BlogConfig',
+    'core.contacts.apps.ContactsConfig',
+    'core.events.apps.EventsConfig',
+    'core.profiles.apps.ProfilesConfig',
+    'core.research.apps.ResearchConfig',
     # third party apps by position
     'django_prose_editor',
     'simple_history',
