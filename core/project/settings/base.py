@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'core.blog.apps.BlogConfig',
     'core.contacts.apps.ContactsConfig',
     'core.events.apps.EventsConfig',
+    'core.pages.apps.PagesConfig',
     'core.profiles.apps.ProfilesConfig',
     'core.research.apps.ResearchConfig',
     # third party apps by position
