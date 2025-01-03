@@ -16,7 +16,7 @@ const formActionLink = "/contact/consultation/";
 const csrf = document.getElementsByName("csrfmiddlewaretoken");
 
 //append form csrf to form data object
-formData.append("csrfmiddlewaretoken", csrf[1].value);
+formData.append("csrfmiddlewaretoken", csrf[0].value);
 
 dormElement.submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
