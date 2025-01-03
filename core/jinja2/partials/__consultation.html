@@ -18,24 +18,24 @@
                                 <p id="consult_form-msg"
                                     style="font-weight:bold; font-size: 13px; color: #fff; margin-bottom: 20px;"></p>
                             </div>
-                            <form action="" method="post" class="booking-form">
+                            <form method="post" class="booking-form">
                                 {{csrf_input}}
                                 <div class="g-recaptcha" data-sitekey="your-public-site-key"></div>
                                 <div class="form-group">
                                     <input type="text" id="consult_name" name="consult_name" placeholder="Name"
                                         required="">
-                                    <label id="error-consult_name" class="error-infor" for="id_consult_name"
+                                    <label id="error-consult_name" class="error-info" for="id_consult_name"
                                         style="color: #fff; padding-left:8px; font-size: 14px; display: none;"></label>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" id="consult_email" name="consult_email" placeholder="Email"
                                         required="">
-                                    <label id="error-consult_email" class="error-infor" for="id_consult_name"
+                                    <label id="error-consult_email" class="error-info" for="id_consult_name"
                                         style="color: #fff; padding-left:8px; font-size: 14px; display: none;"></label>
                                 </div>
                                 <div class="form-group">
                                     <textarea id="consult_message" name="consult_message" placeholder="Text"></textarea>
-                                    <label id="error-consult_message" class="error-infor" for="id_consult_name"
+                                    <label id="error-consult_message" class="error-info" for="id_consult_name"
                                         style="color: #fff; padding-left:8px; font-size: 14px; display: none;"></label>
                                 </div>
                                 <div class="form-group message-btn">
