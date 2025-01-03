@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{# internal style #}
+{% block pageStyle %}
+    <style>
+        .text p{
+            text-align: justify !important;
+        }
+    </style>
+{% endblock pageStyle %}
+
+
+{% block pageContent %}      
+
+        <!-- event-details -->
+        <section class="event-details sec-pad-2" style="margin-top: 80px;">
+            <div class="pattern-layer" style="background-image: url(/static/assets/img/shape/shape-67.png);"></div>
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div class="col-lg-9 col-md-12 col-sm-12 content-side">
+                        <div class="event-details-content">
+                            <div class="content-one">
+                                <figure class="image"><img src="{{ project.image.url }}" alt="" style="width: 830px; height:492px"></figure>
+                                <div class="text">
+                                    <h3>{{project.title}}</h3>
+                                    <p class="black-text">
+                                        {{project.project_description_one}}    
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="content-two">
+                                <div class="image-box">
+                                    {% if project.gallery_image_1 or project.gallery_image_2 or project.gallery_image_3 or project.gallery_image_4 or project.gallery_image_5 or project.gallery_image_6 %}
+                                       <div class="row clearfix">
+                                            {% if project.gallery_image_1 %}
+                                                <div class="{% if project.gallery_image_2 %}col-lg-4 col-md-6 col-sm-12 image-column{% else %} col-lg-12 col-md-12 col-sm-12 image-column{% endif %}">
+                                                    <figure class="image"><img src="{{ project.gallery_image_1.url }}" alt="project image one" {% if project.gallery_image_2 %}style="width: 263px; height:200px;"{% else %} style="height:500px;"{% endif %}"></figure>
+                                                </div>
+                                            {% endif %}
+                                            {% if project.gallery_image_2 %}
+                                                <div class="col-lg-4 col-md-6 col-sm-12 image-column">
+                                                    <figure class="image"><img src="{{ project.gallery_image_2.url }}" alt="project image two" style="width: 263px; height:200px;"></figure>
+                                                </div>
+                                            {% endif %}
+                                            {% if project.gallery_image_3 %}
+                                                <div class="col-lg-4 col-md-6 col-sm-12 image-column">
+                                                    <figure class="image"><img src="{{ project.gallery_image_3.url }}" alt="project image three" style="width: 263px; height:200px;"></figure>
+                                                </div>
+                                            {% endif %}
+                                            {% if project.gallery_image_4 %}
+                                                <div class="col-lg-4 col-md-6 col-sm-12 image-column">
+                                                    <figure class="image"><img src="{{ project.gallery_image_4.url }}" alt="project image four" style="width: 263px; height:200px;"></figure>
+                                                </div>
+                                            {% endif %}
+                                            {% if project.gallery_image_5 %}
+                                                <div class="col-lg-4 col-md-6 col-sm-12 image-column">
+                                                    <figure class="image"><img src="{{ project.gallery_image_5.url }}" alt="project image five" style="width: 263px; height:200px;"></figure>
+                                                </div>
+                                            {% endif %}
+                                            {% if project.gallery_image_6 %}
+                                                <div class="col-lg-4 col-md-6 col-sm-12 image-column">
+                                                    <figure class="image"><img src="{{ project.gallery_image_6.url }}" alt="project image six" style="width: 263px; height:200px;"></figure>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="text">
+                                    <p>
+                                        {{project.project_description_two}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
+                        <div class="events-sidebar">
+                            <div class="speaker-box">
+                                <h3>Speakers</h3>
+                                {# speaker name and title list #}
+                                {% set innovator_names = project.other_innovators.split(',') %}
+
+                                {# speaker images #}
+                                {% set innovator_images = [project.other_innovator_image_1, project.other_innovator_image_2, project.other_innovator_image_3, project.other_innovator_image_4 ] %}
+                                
+                                {# primary project innovator #}
+                                <div class="single-speaker">
+                                    {# ensure image is not null #}
+                                    {% if project.author %}
+                                        <figure class="speaker-thumb"><img src="{{ project.author.image.url }}" alt="{{project.author.first_name}}" style="width: 100px; height:90px;"></figure>
+                                    {% endif %}
+                                    <h4>{{project.author.title}} {{project.author.first_name}} {{project.author.last_name}}</h4>
+                                    <span class="designation">Project Researcher</span>
+                                </div>
+                                {% for i in range(0, innovator_names|length) if innovator_names|length > 0  %}
+                                    <div class="single-speaker">
+                                        {# ensure image is not null #}
+                                        {% if innovator_images[i] is defined %}
+                                            <figure class="speaker-thumb"><img src="{{ innovator_images[i].url }}" alt="{{innovator_names[i]}}" style="width: 100px; height:90px;"></figure>
+                                        {% endif %}
+                                        <h4>{{innovator_names[i]}}</h4>
+                                        <span class="designation">Project Supervisor</span>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+                            <div class="speaker-info">
+                                <h3>More Details</h3>
+                                <ul class="info-list clearfix">
+                                    <li><i class="icon-51"></i><span>Category: </span>{{project.category}}</li>
+                                    <li><i class="icon-22"></i><span>Status: </span>{{project.status}}</li>
+                                    <li><i class="icon-17"></i><span>Tags: </span>{{project.tags}}</li>
+                                </ul>
+                            </div>
+                            <div class="map-inner">
+                                <div class="map-container">
+                                    <iframe width="100%" height="330px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                                        style="border:0;"
+                                        src="https://maps.google.com/maps?f=l&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=University+of+Johannesburg+Auckland+Park&amp;aq=t&amp;sll=-26.1823923242336, 27.995956728836937&amp;ie=UTF8&amp;ll=-26.1823923242336, 27.995956728836937&amp;z=17&amp;om=0&amp;iwloc=addr&amp;iwd=0&amp;layer=0&amp;output=embed&amp;t=k">
+                                    </iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- event-details end -->
+
+{% endblock pageContent %}   
