@@ -117,7 +117,4 @@ AUTHENTICATION_BACKENDS = [
 # Site settings
 SITE_ID = 1
 
-# Login
-LOGIN_REDIRECT_URL = 'home'
-LOGIN_URL = 'account_login'
 # LOGOUT_REDIRECT_URL = 'home'
