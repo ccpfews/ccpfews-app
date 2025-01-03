@@ -291,7 +291,8 @@
 
 {# extra script #}
 {% block pageScript %}
-        <script>
-            document.querySelector('.owl-carousel .owl-stage-outer').style.overflow='visible';
-        </script>
+    <script src="{{ static('assets/js/ajax.js') }}"></script>
+    <script>
+        document.querySelector('.owl-carousel .owl-stage-outer').style.overflow='visible';
+    </script>
 {% endblock pageScript %}
