@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{# internal style #}
+{% block pageStyle %}
+    <style>
+        .text p{
+            text-align: justify !important;
+        }
+    </style>
+{% endblock pageStyle %}
+
+{% block pageContent %} 
+
+    <!-- team-details -->
+    <section class="team-details" style="margin-top: 150px;">
+        
+        <div class="auto-container">
+            <div class="team-details-content">
+                <div class="row align-items-center clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-12 image-column">
+                        <div class="image_block_2">
+                            <div class="image-box">
+                                <div class="shape">
+                                    <div class="shape-1 rotate-me" style="background-image: url(/static/assets/img/shape/shape-8.png);"></div>
+                                    <div class="shape-2" style="background-image: url(/static/assets/img/shape/shape-9.png);"></div>
+                                    <div class="shape-3 rotate-me" style="background-image: url(/static/assets/img/shape/shape-10.png);"></div>
+                                    <div class="shape-4"></div>
+                                </div>
+                                <figure class="image"><img src="{{ profile.image.url }}" alt="{{profile.first_name}} image" style="width: 522px; height:716px;"></figure>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 content-column">
+                        <div class="content_block_2">
+                            <div class="content-box">
+                                <div class="sec-title">
+                                    <h6>CCPFEWS Research</h6>
+                                    <h2>{{profile.title|default('')}} {{profile.first_name}} {{profile.last_name}}</h2>
+                                    <p>{{profile.role}}</p>
+                                </div>
+                                <div class="text">
+                                    <h3>Biography</h3>
+                                    <p style="text-align: justify;">{{profile.about}}</p>
+                                </div>
+                                {#
+                                <ul class="info clearfix">
+                                    <li><i class="icon-52"></i>Email: <a href="mailto:{{profile.email}}">{{profile.email}}</a></li>
+                                </ul>
+                                #}
+                                <br>
+                                <ul class="social-style-one clearfix">
+                                    <li><a href="{{profile.linkedin_url}}" target="{% if profile.linkedin_url %}_blank{% else %}_self{% endif %}"><i class="fab fa-linkedin"></i></a></li>
+                                    <li><a href="{{profile.researchgate_url}}" target="{% if profile.researchgate_url %}_blank{% else %}_self{% endif %}"><i class="fab fa-researchgate"></i></a></li>                               
+                                    <li><a href="{{profile.google_scholar_url}}" target="{% if profile.google_scholar_url %}_blank{% else %}_self{% endif %}"><i class="fab fa-google-plus-g"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- team-details end -->
+
+
+    <!-- education-section -->
+    <section class="education-section sec-pad bg-color-1 centred">
+        <div class="pattern-layer">
+            <div class="pattern-1 wow zoomIn animated" data-wow-delay="00ms" data-wow-duration="1500ms" style="background-image: url(/static/assets/img/shape/shape-71.png);"></div>
+            <div class="pattern-2 wow zoomIn animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="background-image: url(/static/assets/img/shape/shape-72.png);"></div>
+        </div>
+        
+        {# qualification lists #}
+        {% set qualifications = profile.qualifications.split(',') %}
+        {% set qualification_schools = profile.qualification_schools.split(',') %}
+        {% set qualification_years = profile.qualification_years.split(',') %}
+
+        <div class="auto-container">
+            <div class="sec-title centred">
+                <h6>Education</h6>
+                <h2>Educational Career</h2>
+            </div>
+            <div class="border-layout"></div>
+            <div class="row clearfix">
+                {% for i in range(0, qualifications|length) %}
+                    <div class="col-lg-3 col-md-6 col-sm-12 education-block">
+                        <div class="education-block-one">
+                            <div class="inner-box">
+                                <div class="dot-box"></div>
+                                <h3>{{qualification_years[i]}}</h3>
+                                <h4>{{qualifications[i]}}</h4>
+                                <p>{{qualification_schools[i]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- education-section end -->
+
+
+    <!-- awards-section -->
+    <section class="awards-section sec-pad-2">
+        <div class="shape-layer">
+            <div class="shape-1 rotate-me" style="background-image: url(/static/assets/img/shape/shape-58.png);"></div>
+            <div class="shape-2"></div>
+        </div>
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="col-lg-6 col-md-12 col-sm-12 title-column">
+                    <div class="sec-title">
+                        <h6>Skill Sets</h6>
+                        <h2>Skills & Projects</h2>
+                        <p style="color: #0f1729ff; font-weight: bold; opacity: .8;">{{profile.skillset}}</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 inner-column">
+                    <div class="inner-box">
+                        {% for project in projects if project.author.profile_id == profile.profile_id %}
+                            <div class="single-item">
+                                <h3>{{project.date_published.strftime('%d')}}<span>{{project.date_published.strftime('%b')}}</span></h3>
+                                <h4><a href="/research/project/{{project.project_id}}/details/">{{project.title}}</a></h4>
+                                <p>{{project.project_description_one|truncate(49, true)}}</p>
+                            </div>
+                        {% else %}
+                            {# current date using now #}
+                            {% now "b" as current_month %}
+                            {% now "Y" as current_year %}
+
+                            <div class="single-item">
+                                <h3>{{current_year}}<span>{{current_month|upper}}</span></h3>
+                                <h4>FEW Nexus Researcher</h4>
+                                <p>Food, Energy and Water Systems Researcher.</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- awards-section end -->
+
+{% endblock pageContent %}
