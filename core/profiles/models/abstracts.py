@@ -38,7 +38,7 @@ class Bio(models.Model):
     graduation_date = pgcrypto.EncryptedDateField(
         max_length=100, null=True, blank=True, help_text='graduation date if graduation status is completed'
     )
-    industry_job = pgcrypto.EncryptedDateField(
+    industry_job = pgcrypto.EncryptedCharField(
         max_length=100, null=True, blank=True, help_text='job in industry if graduation status is completed'
     )
     linkedin_url = pgcrypto.EncryptedCharField(max_length=200, null=True, blank=True, help_text='linkedin link')
@@ -50,7 +50,7 @@ class Bio(models.Model):
     )
     publish = models.BooleanField(default=True, help_text='make profile visible')
     creation_date = models.DateTimeField(auto_now_add=True, help_text='date user account was created')
-    timestamp = pgcrypto.EncryptedDateTimeField(default=timezone.now)
+    timestamp = models.DateTimeField(default=timezone.now)
 
     class Meta:
         abstract = True
