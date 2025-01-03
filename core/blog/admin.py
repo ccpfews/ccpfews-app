@@ -28,7 +28,7 @@ class BlogResource(resources.ModelResource):
         model = Blog
         skip_unchanged = True
         report_skipped = True
-        export_id_fields = ['post_id']
+        import_id_fields = ['post_id']
 
     def export(self, queryset=None, *args, **kwargs):
         """
