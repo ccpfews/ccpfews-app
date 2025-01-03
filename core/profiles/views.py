@@ -60,5 +60,5 @@ class TeamDetails(DetailView):
         context['projects'] = Project.objects.order_by('-date_published').filter(
             publish=True,
             post_scheduling__lte=current_timestamp,
-        )[:3]
+        )
         return context
