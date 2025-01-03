@@ -60,17 +60,6 @@ MEDIA_ROOT = f'{BASE_DIR}/core/media'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email settings
-EMAIL_BACKEND = ENV.config('EMAIL_BACKEND')
-EMAIL_PORT = ENV.config('EMAIL_PORT')
-EMAIL_HOST = ENV.config('EMAIL_HOST')
-EMAIL_HOST_USER = ENV.config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = ENV.config('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = ENV.config('DEFAULT_FROM_EMAIL')
-SERVER_EMAIL = ENV.config('SERVER_EMAIL')
-EMAIL_SUBJECT_PREFIX = ENV.config('EMAIL_SUBJECT_PREFIX')
-EMAIL_USE_TSL = ENV.config('EMAIL_USE_TSL')
-
 # Sentry config
 sentry_sdk.init(
     dsn=ENV.config('SENTRY_DNS'),
