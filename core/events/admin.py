@@ -16,6 +16,7 @@ class EventResource(resources.ModelResource):
         model = Event
         skip_unchanged = True
         report_skipped = True
+        import_id_fields = ['event_id']
 
     def export(self, queryset=None, *args, **kwargs):
         """

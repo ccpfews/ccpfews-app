@@ -1,35 +1,13 @@
 from django.contrib import admin
-from django.core.exceptions import PermissionDenied
 from django.forms import Textarea, TextInput  # noqa: I101
-from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from pgcrypto import EncryptedCharField, EncryptedDateTimeField, EncryptedEmailField, EncryptedTextField
 from unfold.admin import ModelAdmin
-from unfold.contrib.import_export.forms import ExportForm, ImportForm
 
 from .models import Consultation, Contact
 
 
-class ImportExportResource(resources.ModelResource):
-
-    class Meta:
-        model = Contact
-        skip_unchanged = True
-        report_skipped = True
-        import_id_fields = ['id']
-
-    def export(self, queryset=None, *args, **kwargs):
-        """
-        override the export action by disabling it
-        and rendering an error page
-        """
-        raise PermissionDenied
-
-
-class ContactMessageAdmin(ModelAdmin, ImportExportModelAdmin):
-    import_form_class = ImportForm
-    export_form_class = ExportForm
-    resource_class = ImportExportResource
+class ContactMessageAdmin(ModelAdmin):
     list_display = ['full_name', 'email', 'subject', 'has_read', 'date_received']
     list_display_links = ['full_name', 'email', 'subject', 'date_received']
     date_hierarchy = 'date_received'
@@ -58,9 +36,6 @@ class ContactMessageAdmin(ModelAdmin, ImportExportModelAdmin):
 
 
 class ConsultationMessageAdmin(ModelAdmin, ImportExportModelAdmin):
-    import_form_class = ImportForm
-    export_form_class = ExportForm
-    resource_class = ImportExportResource
     list_display = ['consult_name', 'consult_email', 'has_read', 'date_received']
     list_display_links = ['consult_name', 'consult_email', 'date_received']
     date_hierarchy = 'date_received'

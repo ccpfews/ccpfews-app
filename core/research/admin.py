@@ -28,7 +28,7 @@ class ProjectResource(resources.ModelResource):
         model = Project
         skip_unchanged = True
         report_skipped = True
-        import_id_fields = ['profile_id']
+        import_id_fields = ['project_id']
 
     def export(self, queryset=None, *args, **kwargs):
         """
