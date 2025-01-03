@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{# meta header #}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <meta name="keywords" content="ccpfews, uj, johannesburg, sa, student, africa, university, machine learning, artificial intelligence, ai, computer vision, optimization, supply chain management, blockchain, graduate, doctorate">
+    <meta name="description" content="The Centre for Cyber Physical Food Energy and Water Systems (CCPFEWS) is a solutions oriented research centre with focus in the Food, Energy and Water Nexus.">
+    <!-- Facebook OpenGraph Metadata -->
+    <meta property="og:title" content="Center-for-Cyber-Physical-Food-Energy-Water-Systems-109828241427969">
+    <meta property="og:description" content="The Centre for Cyber Physical Food Energy and Water Systems (CCPFEWS) is a solutions oriented research centre with focus in the Food, Energy and Water Nexus">
+    <meta property="og:image" content="{{static ('assets/img/logo.jpg')}}">
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://www.ccpfews.uj.ac.za">
+    <meta property=”og:type” content="website" />
+
+    <!-- Twitter OpenGraph Metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@CcpFews" />
+    <meta name="twitter:title" content="CCPFEWS">
+    <meta name="twitter:creator" content="@CcpFews">
+    <meta name="twitter:description" content="The Centre for Cyber Physical Food Energy and Water Systems (CCPFEWS) is a solutions oriented research centre with focus in the Food, Energy and Water Nexus.">
+    <meta name="twitter:image" content="{{static ('assets/img/logo.jpg')}}">
+    <meta name="twitter:image:alt" content="The Centre for Cyber Physical Food Energy and Water Systems (CCPFEWS) is a solutions oriented research centre with focus in the Food, Energy and Water Nexus.">
+    <meta name="author" content="CCPFEWS">
+
+    {# title #}
+    <title>{% block title %}CCPFEWS - Home{% endblock title %}</title>			
+
+    <!-- Fav Icon -->
+    {% block favicon %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{static ('assets/favicon/apple-touch-icon.png')}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{static ('assets/favicon/favicon-32x32.png')}}">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{static ('assets/favicon/android-chrome-192x192.png')}}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{static ('assets/favicon/favicon-16x16.png')}}">
+        <link rel="manifest" href="{{static ('assets/favicon/site.webmanifest')}}">
+        <link rel="mask-icon" href="{{static ('assets/favicon/safari-pinned-tab.svg')}}" color="#ac9d9d">
+        <meta name="msapplication-TileColor" content="#00aba9">
+        <meta name="msapplication-TileImage" content="{{static ('assets/favicon/mstile-144x144.png')}}">
+        <meta name="theme-color" content="#ffffff">
+        <link rel="shortcut icon" href="{{ static('assets/favicon/favicon.ico')}}" type="image/x-icon">
+    
+    {% endblock favicon %}
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+     {% block styles %} 
+        <link href="{{ static('assets/css/font-awesome-all.css') }}" rel="stylesheet">
+        <link href="{{ static('assets/css/flaticon.css') }}" rel="stylesheet">
+        <link href="{{ static('assets/css/owl.css') }}" rel="stylesheet">
+        <link href="{{ static('assets/css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ static('assets/css/jquery.fancybox.min.css') }}" rel="stylesheet">
+        <link href="{{ static('assets/css/animate.css') }}" rel="stylesheet">
+        <link href="{{ static('assets/css/color.css') }}" rel="stylesheet">
+        <link href="{{ static('assets/css/style.css') }}" rel="stylesheet">
+        <link href="{{ static('assets/css/responsive.css') }}" rel="stylesheet">
+    {% endblock styles %}
+
+    {# internal style #}
+    {% block pageStyle %}{% endblock pageStyle %}
+
+</head>
+
+
+<body>
+
+    <div class="boxed_wrapper {% block bodyClass %}{% endblock bodyClass %}">
+
+        {# nav sections #}
+        {% block nav %}
+            <!-- search-popup -->
+            {% include 'partials/__search.html' %}
+            <!-- search-popup end -->
+
+            <!-- main header -->
+            {% include 'partials/__header.html' %}
+            <!-- main-header end -->
+
+            <!-- sidebar cart item -->
+            {% include 'partials/__consultation.html' %}
+            <!-- END sidebar widget item -->
+
+            <!-- Mobile Menu  -->
+            {% include 'partials/__mobile_nav.html' %}
+            <!-- End Mobile Menu -->
+        {% endblock nav %}
+
+        {# page content #}
+        {% block pageContent %}{% endblock pageContent %}
+
+        <!-- cta-style-two -->
+        {% include 'partials/__cta.html' %}
+        <!-- cta-style-two end -->
+
+        {# footer section #}
+        {% block footer %}
+            <!-- main-footer -->
+            {% include 'partials/__footer.html'%}
+            <!-- main-footer end -->
+            
+            <!--Scroll to top-->
+            {% include 'partials/__scroller.html' %}
+        {% endblock footer %}
+    </div>
+
+    {% block scripts %}
+        <!-- jquery plugins -->
+        <script src="{{ static('assets/js/jquery.js') }}"></script>
+        <script src="{{ static('assets/js/popper.min.js') }}"></script>
+        <script src="{{ static('assets/js/bootstrap.min.js') }}"></script>
+        <script src="{{ static('assets/js/owl.js') }}"></script>
+        <script src="{{ static('assets/js/wow.js') }}"></script>
+        <script src="{{ static('assets/js/validation.js') }}"></script>
+        <script src="{{ static('assets/js/jquery.fancybox.js') }}"></script>
+        <script src="{{ static('assets/js/appear.js') }}"></script>
+        <script src="{{ static('assets/js/isotope.js') }}"></script>
+        <script src="{{ static('assets/js/jquery.nice-select.min.js') }}"></script>
+        <script src="{{ static('assets/js/nav-tool.js') }}"></script>
+        <script src="{{ static('assets/js/jquery.paroller.min.js') }}"></script>
+        <script src="{{ static('assets/js/ajax.js') }}"></script>
+
+        <!-- main-js -->
+        <script src="{{ static('assets/js/script.js') }}"></script>
+    {% endblock scripts %}
+
+    {# internal script #}
+    {% block pageScript %}{% endblock pageScript %}
+
+</body>
+
+</html>
