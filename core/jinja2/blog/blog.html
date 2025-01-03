@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+
+{# internal style #}
+{% block pageStyle %}
+    <style>
+        .news-block-two .inner-box .image-box:before, .image-box img, .image-box a  {
+            height: 378px;
+        }
+
+    </style>
+{% endblock pageStyle %}
+
+{% block pageContent %}
+    <!-- Page Title -->
+    <section class="page-title centred" style="background-image: url(/static/assets/img/background/rectangle.png);margin-top: 130px;">
+        <div class="auto-container">
+            <div class="content-box">
+                <div class="shape" style="background-image: url(/static/assets/img/shape/shape-63.png);"></div>
+                <div class="title">
+                    <h1>Blog Post</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Page Title -->
+
+
+    <!-- blog-page-section -->
+    <section class="blog-page-section sec-pad-2">
+        <div class="auto-container">
+            <div class="row clearfix">
+                {% for blog in blog if blog %}
+                    <div class="col-lg-6 col-md-6 col-sm-12 news-block">
+                        <div class="news-block-two">
+                            <div class="inner-box">
+                                <figure class="image-box">
+                                    <img src="{{ blog.featured_image.url }}" alt="{{blog.title}} image">
+                                    <a href="{{ url('blog_details', args=[blog.post_id]) }}" class="link"><i class="fas fa-link"></i></a>
+                                    <div class="post-date">
+                                        <h3>
+                                            {{ blog.date_published.strftime('%d') }}
+                                            <span>{{ blog.date_published.strftime('%b')|upper }}</span>
+                                        </h3>
+                                    </div>
+                                </figure>
+                                <div class="content-box">
+                                    
+                                    <h4><a href="{{ url('blog_details', args=[blog.post_id] ) }}">{{blog.title}}</a></h4>
+                                    <ul class="post-info clearfix">
+                                        <li>by <a href="{{ url('blog_details', args=[blog.post_id] ) }}">{{blog.author.first_name}} {{blog. author.last_name}} </a>,</li>
+                                        <li><a href="{{ url('blog_details', args=[blog.post_id] ) }}">{{blog.views_count|intcomma}} Views.</a></li>
+                                    </ul>
+                                    <p>{{blog.post_one|truncate(40, true)}}</p>
+                                    <div class="btn-box"><a href="{{ url('blog_details', args=[blog.post_id] ) }}" class="theme-btn-two">Read More</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    {# current date using now #}
+                    {% now "b" as current_month %}
+                    {% now "d" as current_day %}
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 news-block">
+                        <div class="news-block-two">
+                            <div class="inner-box">
+                                <figure class="image-box">
+                                    <img src="{{ static('assets/img/news/news-4.jpg') }}" alt="">
+                                    <a href="#" class="link"><i class="fas fa-link"></i></a>
+                                    <div class="post-date">
+                                        <h3>
+                                            {{current_day}}
+                                            <span>{{current_month|upper}}</span>
+                                        </h3>
+                                    </div>
+                                </figure>
+                                <div class="content-box">
+                                    <h4><a href="#">No new blog listings found.</a></h4>
+                                    <ul class="post-info clearfix">
+                                        <li>by <a href="#">CCPFEWS Research</a>,</li>
+                                        <li><a href="#">No Views Yet</a></li>
+                                    </ul>
+                                    <p>No listings to show at the moment, kindly check back later.</p>
+                                    <div class="btn-box"><a href="{{url('home')}}" class="theme-btn-two">Home Page</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>       
+                    
+
+            {# pagination using only jinja, no js #}
+            {% if is_paginated %}
+                <div class="pagination-wrapper centred">
+                    <ul class="pagination clearfix">                        
+                        {# init total pages #}
+                        {% set pagesNum = paginator.page_range|count + 1 %}
+                        {# init total items in the pagination #}
+                        {% set totalItems = paginator.count %}
+                        {# init start number for the pagination range #}
+                        {% set starterCount = 1 %}
+                        {# init current page in the pagination #}
+                        {% set currentPage = page_obj.number  %}
+                        {# starting  highest page number to show in pagination numbering  eg 1, 2, 3, 4 #}
+                        {% set controller = 4 %}
+                        {# set the range of the pagination per time#}
+                        {% set numberRange = totalItems %}
+
+                        {# set left navigation link #}
+                        {% set previous_pagination_link = "" %}
+                        {% if page_obj.number - 1  >  0 %}
+                            {% set previous_pagination_link = previous_pagination_link + "?page=" + (currentPage - 1)|string %}
+                        {% else %}
+                            {% set previous_pagination_link = previous_pagination_link + "#" %}
+                        {% endif %}
+                        
+                        {# left pagination #}
+                        <li><a href="{{previous_pagination_link}}"><i class="fas fa-angle-left"></i></a></li>
+
+                        {# check if the current page is greater than the current controller, if true,
+                            increase the number range by the total item plus 1 since a range 
+                            will stop at one shy in a loop and then set starter count to the
+                            current page minus 2 so that next page will start at 2 for instance
+                        #}
+
+                        {% if currentPage > controller  %}
+                            {% set numberRange = totalItems + 1 %}
+                            {% set starterCount = currentPage - 4 %}
+                        {% else %}
+                            {% set numberRange = 6 %}
+                        {% endif %}
+
+                        {# page numbers to show #}
+                        {% if (pagesNum - numberRange - 1)  > 0 %}
+                            {% set numberRange = numberRange + (pagesNum - numberRange - 1) %}
+                        {% endif  %}
+                        {% if currentPage < pagesNum-1 and currentPage > 4 %}
+                            {% if (pagesNum - currentPage) >= 1 %}
+                                {% set starterCount = currentPage - 2 %}                                                  
+                            {% endif  %}
+                        {% elif currentPage+2 is divisibleby 5 and currentPage + 1 < pagesNum and currentPage - 2 > 0 %}
+                            {% set starterCount = currentPage - 2 %}
+                        {% elif currentPage+1 is divisibleby 5 and currentPage + 1 < pagesNum and currentPage - 1 > 0 %}
+                            {% set starterCount = currentPage - 1 %}
+                        {% endif %}
+
+                        
+                        {# loop and set the numbering #}
+                        {% for k in range(starterCount, numberRange) %}
+                            {% if k <= pagesNum  %}
+                                {# add the activate style for current page #}
+                                {% if currentPage==k %} 
+                                    <li><a href="?page={{k}}" class="current">{{k}}</a></li>
+                                    {% if not loop.first %}
+                                        {% set starterCount = starterCount + 1 %}
+                                        {% set numberRange = numberRange + 1 %}
+                                    {% endif %}
+                                {% elif loop.index <  pagesNum and k - 4 < starterCount %}
+                                    <li><a href="?page={{k}}">{{k}}</a></li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {# check if there is still more pages to show #}
+                        {% set pageLeft = (pagesNum - 1) - currentPage %}
+                        {% if  pageLeft > 1 and pagesNum-1 > 4 %}
+                            <li><a href="#">...</a></li>
+                        {% endif %} 
+                        
+                        {# set right navigation button #}
+                        {% set next_pagination_link = "" %}
+                        {% if currentPage + 1  <  pagesNum %}
+                            {% set next_pagination_link = next_pagination_link + "?page=" + (currentPage + 1)|string %}
+                        {% else %}
+                            {% set next_pagination_link = next_pagination_link + "#" %}
+                        {% endif %}
+
+                        {# right navigation #}
+                        <li><a href="{{next_pagination_link}}"><i class="fas fa-angle-right"></i></a></li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    <!-- blog-page-section end -->
+{% endblock pageContent %}
+
+

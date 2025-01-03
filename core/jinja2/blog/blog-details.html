@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+
+{# internal style #}
+{% block pageStyle %}
+    <style>
+        .text p{
+            text-align: justify !important;
+        }
+    </style>
+{% endblock pageStyle %}
+
+
+{% block pageContent %}
+
+    <!-- Page Title -->
+    <section class="page-title centred"
+        style="background-image: url(/static/assets/img/background/rectangle_2.png);margin-top: 130px;">
+        <div class="auto-container">
+            <div class="content-box">
+                <div class="shape" style="background-image: url(/static/assets/img/shape/shape-63.png);"></div>
+                <div class="title">
+                    <h1 style="font-size: 25px;">{{blog.title}}</h1>
+                </div>
+                <ul class="bread-crumb clearfix">
+                    <li><a href="{{url('home')}}">Home</a></li>
+                    <li>Blog Post</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!-- End Page Title -->
+
+
+    <!-- sidebar-page-container -->
+    <section class="sidebar-page-container blog-details sec-pad-2">
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 content-side">
+                    <div class="blog-details-content">
+                        <div class="news-block-three">
+                            <div class="inner-box">
+                                <div class="lower-content">
+                                    <div class="post-date">
+                                        <h3>
+                                            {{ blog.date_published.strftime('%d') }}
+                                            <span>{{ blog.date_published.strftime('%b') }}</span>
+                                        </h3>
+                                    </div>
+                                    <div class="inner">
+                                        <h3>{{blog.title}}</h3>
+                                        <div class="post-info">
+                                            <p>by <a href="#">{{blog.author.first_name}} {{blog.author.last_name}}</a>,&nbsp;&nbsp;<a
+                                                    href="#">{{blog.views_count|intcomma}} Views</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-one">
+                            <figure class="image"><img src="{{ blog.featured_image.url }}" alt="{{blog.title}}" style="width: 100%; height: 470px;"></figure>
+                            <div class="text">
+                                <p>{{blog.post_one|replace('<p></p>', '<br>')}}</p>
+                            </div>
+                        </div>
+                        <div class="content-two"> 
+                            {# image selector #}
+                            {% set random_selection = [blog.gallery_image_1, blog.gallery_image_2, blog.gallery_image_3] %}
+
+                            <div class="image-box clearfix">
+                                {% for selection in random_selection|reverse %}
+                                    <figure class="image"><img src="{{selection.url}}" alt="" style="height: 250px;">
+                                    </figure>
+                                {% endfor %}
+                            </div>
+                            <div class="text">
+                                <p>{{blog.post_two|replace('<p></p>', '<br>')}}</p>
+                                <br>
+                                <p>
+                                    {{blog.post_three|replace('<p></p>', '<br>')}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="post-share-option clearfix">
+                            <ul class="tags-list clearfix pull-left">
+                                <li>
+                                    <h5>Tags:</h5>
+                                </li>
+                                <li><a href="#">{{blog.tags|title}}</a>.</li>
+                            </ul>
+                            <ul class="social-links clearfix pull-right">
+                                <li><a href="{{ blog.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="{{ blog.twitter }}" style="background: #55acee;" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="{{ blog.linkedin }}" style="background: #466ca9;" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="author-box" style="margin-bottom: -50px;">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(/static/assets/img/shape/shape-73.png);">
+                                </div>
+                                <div class="shape-2" style="background-image: url(/static/assets/img/shape/shape-74.png);">
+                                </div>
+                            </div>
+                            <figure class="author-thumb"><img src="{{ blog.author.image.url }}" alt="">
+                            </figure>
+                            <div class="inner">
+                                <h3>About {{blog.author.first_name}} {{blog.author.last_name}}</h3>
+                                <p>
+                                    {{blog.author.short_bio}}
+                                </p>
+                                <ul class="social-links clearfix">
+                                    <li><a href="{{ blog.author.linkedin_url }}" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                                    <li><a href="{{ blog.author.researchgate_url }}" target="_blank"><i class="fab fa-researchgate"></i></a></li>
+                                    <li><a href="{{ blog.author.google_scholar_url }}" target="_blank"><i class="fab fa-google-plus-g"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- sidebar-page-container end -->
+
+   
+{% endblock pageContent %}
