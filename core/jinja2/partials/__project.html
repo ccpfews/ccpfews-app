@@ -1,0 +1,37 @@
+<section class="testimonial-section alternat-3">
+    <div class="shape-layer">
+        <div class="shape-1 rotate-me" style="background-image: url(static/assets/img/shape/shape-48.png);">
+        </div>
+        <div class="shape-2"></div>
+    </div>
+    <div class="auto-container">
+        <div class="inner-content">
+            <div class="inner">
+                <div class="sec-title">
+                    <h6>Our Projects</h6>
+                    <h2>Ongoing and Completed Projects</h2>
+                </div>
+                <div class="single-item-carousel owl-carousel owl-theme owl-dots-none">
+                    {% for project in projects if project %}
+                        <div class="content_block_3">
+                            <div class="content-box">
+                                <div class="text">
+                                    <p>{{project.project_description_one|truncate(144, true)}}</p>
+                                </div>
+                                <div class="author-box">
+                                    <figure class="author-thumb"><img
+                                            src="{{ project.image.url }}" alt="{{project.title}} image" style="height: 70px; width:70px;">
+                                    </figure>
+                                    <h4>{{project.title|truncate(20, true)}}</h4>
+                                    <span class="designation">{{project.status}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <figure class="image-box"><img src="{{ static('assets/img/banner/robot_arm_irrigation.jpg') }}" alt="robot farm irrigation" style="width: 585px; height:500px">
+            </figure>
+        </div>
+    </div>
+</section>

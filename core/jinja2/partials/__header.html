@@ -1,0 +1,68 @@
+<header class="main-header style-four">
+    <!-- header-lower -->
+    <div class="header-lower">
+        <div class="outer-box">
+            <div class="logo-box">
+                <figure class="logo"><a href="{{ url('home') }}"><img src="{{ static('assets/img/logo.jpg') }}"
+                            alt="" style="width: 150px; height: 100px;"></a></figure>
+            </div>
+            <div class="menu-area clearfix">
+                <!--Mobile Navigation Toggler-->
+                <div class="mobile-nav-toggler">
+                    <i class="icon-bar"></i>
+                    <i class="icon-bar"></i>
+                    <i class="icon-bar"></i>
+                </div>
+                <nav class="main-menu navbar-expand-md navbar-light">
+                    <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
+                        <ul class="navigation clearfix">
+
+                            {# init path split and home url #}
+                            {% set split_path = request.path.split('/') %}
+                            {% set home_url = url('home') %}
+
+                            {# nav #}
+                            <li {% if request.path ==  home_url  %}class="current"{% endif %}><a href="{{ url('home') }}">Home</a></li>
+                            <li {% if 'about' in split_path  %}class="current"{% endif %}><a href="{{ url('about') }}">About</a></li>
+                            <li {% if 'team' in split_path  %}class="current"{% endif %}><a href="{{ url('team_listings') }}">Team</a></li>
+                            <li {% if 'events' in split_path  %}class="current"{% endif %}><a href="{{ url('event_listings') }}">Events</a></li>
+                            <li {% if 'research' in split_path and 'projects' not in split_path and 'project' not in split_path %}class="current"{% endif %}><a href="{{ url('research') }}">Research</a></li>
+                            <li {% if 'research' in split_path and 'project' in split_path or 'projects' in split_path %}class="current"{% endif %}><a href="{{ url('project_listings') }}">Projects</a></li>
+                            <li {% if 'blog' in split_path  %}class="current"{% endif %}><a href="{{ url('blog_listings') }}">Blog</a></li>
+                            <li {% if 'contact' in split_path  %}class="current"{% endif %}><a href="{{ url('contact') }}">Contact</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <ul class="menu-right-content clearfix">
+                <li class="search-btn">
+                    <button type="button" class="search-toggler"><i class="icon-1"></i></button>
+                </li>
+                <li class="btn-box">
+                    <a href="#" class="theme-btn-one nav-btn nav-toggler navSidebar-button clearfix">Request A Consultation</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--sticky Header-->
+    <div class="sticky-header">
+        <div class="auto-container">
+            <div class="outer-box clearfix">
+                <div class="menu-area pull-left">
+                    <nav class="main-menu clearfix">
+                        <!--Keep This Empty / Menu will come through Javascript-->
+                    </nav>
+                </div>
+                <ul class="menu-right-content pull-right clearfix">
+                    <li class="search-btn">
+                        <button type="button" class="search-toggler"><i class="icon-1"></i></button>
+                    </li>
+                    <li class="btn-box">
+                        <a href="#" class="theme-btn-one nav-btn nav-toggler navSidebar-button clearfix">Request A Consultation</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

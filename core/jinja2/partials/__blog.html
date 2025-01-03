@@ -1,0 +1,34 @@
+<section class="news-style-two sec-pad" style="margin-top: -180px;">
+    <div class="auto-container">
+        <div class="sec-title">
+            <h6>Recent Article</h6>
+            <h2>Interesting Articles Updated <br /></h2>
+        </div>
+        <div class="two-column-carousel owl-carousel owl-theme owl-dots-none">
+            {% for blog in posts if blog %}
+                <div class="news-block-two">
+                    <div class="inner-box">
+                        <figure class="news image-box">
+                            <img src="{{ blog.featured_image.url }}" alt="{{blog.title}} image">
+                            <a href="{{ url('blog_details', args=[blog.post_id]) }}" class="link"><i class="fas fa-link"></i></a>
+                            <div class="post-date">
+                                <h3>{{ blog.date_published.strftime('%d') }}
+                                    <span>{{ blog.date_published.strftime('%b')|upper }}</span></h3>
+                            </div>
+                        </figure>
+                        <div class="content-box">
+                            <h4><a href="{{ url('blog_details', args=[blog.post_id] ) }}">{{blog.title|truncate(43, true)}}</a></h4>
+                            <ul class="post-info clearfix">
+                                <li>by <a href="{{ url('blog_details', args=[blog.post_id] ) }}">{{blog.author.first_name}} {{blog. author.last_name}}</a>,</li>
+                                <li><a href="{{ url('blog_details', args=[blog.post_id] ) }}">{{blog.views_count|intcomma}} Views</a></li>
+                            </ul>
+                            <p>{{blog.post_one|truncate(50, true)}}.</p>
+                            <div class="btn-box"><a href="{{ url('blog_details', args=[blog.post_id] ) }}" class="theme-btn-two">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

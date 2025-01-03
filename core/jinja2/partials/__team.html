@@ -1,0 +1,36 @@
+<section class="team-style-three alternat-2 sec-pad centred">
+    <div class="auto-container">
+        <div class="sec-title centred">
+            <h6>Team Members</h6>
+            <h2>Innovate and Build With <br />Our Experts.</h2>
+        </div>
+        <div class="row clearfix">
+                                
+            {% set delays = ["00ms", "300ms", "600ms"]%}
+                    
+            {% for team in teams if team %}
+                <div class="col-lg-4 col-md-6 col-sm-12 team-block">
+                    <div class="team-block-two wow fadeInUp animated" data-wow-delay="{{delays[loop.index0]}}" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <figure class="image-box"><img src="{{team.image.url}}" alt="{{team.first_name}}" style="width: 370px; height:370px;"></figure>
+                            <div class="lower-content">
+                                <div class="inner">
+                                    <h4><a href="{{ url('team_details', args=[team.profile_id]) }}">{{team.title|default('')}} {{team.first_name}} {{team.last_name}}</a></h4>
+                                    <span class="designation">{{team.role}}</span>
+                                    <ul class="social-style-one">
+                                        <li><a href="{{team.linkedin_url}}" target="{% if team.linkedin_url %}_blank{% else %}_self{% endif %}"><i class="fab fa-linkedin"></i></a></li>
+                                        <li><a href="{{team.researchgate_url}}" target="{% if team.researchgate_url %}_blank{% else %}_self{% endif %}"><i class="fab fa-researchgate"></i></a></li>
+                                        <li><a href="{{team.google_scholar_url}}" target="{% if team.google_scholar_url %}_blank{% else %}_self{% endif %}"><i class="fab fa-google-plus-g"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="btn-box centred" style="margin-top: 80px;">
+        <a href="{{ url('team_listings') }}" class="theme-btn-one nav-btn clearfix">View CCPFEWS Team</a>
+    </di>
+</section>

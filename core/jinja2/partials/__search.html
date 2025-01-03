@@ -1,0 +1,26 @@
+<div id="search-popup" class="search-popup">
+    <div class="close-search"><span>x</span></div>
+    <div class="popup-inner">
+        <div class="overlay-layer"></div>
+        <div class="search-form">
+            <form method="get" action="{{url('project_listings')}}">
+                <div class="form-group">
+                    <fieldset>
+                        <input type="search" class="form-control" name="search"
+                            placeholder="Search Projects" required>
+                        <input type="submit" value="Search Now!" class="theme-btn style-four">
+                    </fieldset>
+                </div>
+            </form>
+            {% if request.session.get('search_list')%}
+                <h3>Recent Search Keywords</h3>
+                <ul class="recent-searches">
+                    {% set get_search_session = request.session.get('search_list') %}
+                    {% for search in get_search_session %}
+                        <li><a href="/research/project?search={{search}}/">{{search}}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
