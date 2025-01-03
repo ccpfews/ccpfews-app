@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+
+{# body class #}
+{% block bodyClass %}events-page{% endblock bodyClass %}
+
+
+{% block pageContent %}      
+
+        <!-- events-style-two -->
+        <section class="events-style-two" style="margin-top: 150px;">
+            <div class="pattern-layer" style="background-image: url(/static/assets/img/shape/shape-67.png);"></div>
+            <div class="auto-container">
+                <div class="row clearfix">
+                    {# animation delay #}
+                    {% set delays = ["00ms", "200ms", "400ms", "00ms", "200ms", "400ms"] %}
+
+                    {% for event in events if event %}
+                        <div class="col-lg-4 col-md-6 col-sm-12 event-block">
+                            <div class="event-block-one wow fadeInUp animated" data-wow-delay="{{delays[loop.index0]}}" data-wow-duration="1500ms">
+                                <div class="inner-box">
+                                    <figure class="image-box"> 
+                                        <img src="{{ event.featured_image.url }}" alt="{{event.title}} image" style="width: 370px; height:220px;">
+                                        <a href="{{ url('event_details', args=[event.event_id]) }}"><i class="fas fa-link"></i></a>
+                                    </figure>
+                                    <div class="lower-content">
+                                        <div class="post-date">
+                                            <h3>
+                                                {{ event.date_published.strftime('%d') }}
+                                                <span>{{ event.date_published.strftime('%b')|upper }}</span>
+                                            </h3>
+                                        </div>
+                                        <h4><a href="{{ url('event_details', args=[event.event_id]) }}">{{event.title|truncate(62, true)}}</a></h4>
+                                        <ul class="info clearfix">
+                                            <li><i class="icon-21"></i>{{event.event_location|truncate(40, true)}}</li>
+                                            <li><i class="icon-22"></i>{{event.event_start_time.strftime('%I %p')}} - {{event.event_end_time.strftime('%I %p')}}</li>
+                                        </ul>
+                                        <p>{{event.event_description_one|truncate(75, true)}}</p>
+                                        <ul class="thumb-list clearfix">
+                                            <li>
+                                                <figure class="image"><img src="{{ event.speaker_image_1.url }}" alt=""></figure>
+                                            </li>
+
+                                            {% if event.speaker_image_2 %}
+                                                <li>
+                                                    <figure class="image"><img src="{{ event.speaker_image_2.url }}" alt=""></figure>
+                                                </li>
+                                            {% endif %}
+                                            {% if event.speaker_image_3 %}
+                                                <li>
+                                                    <figure class="image"><img src="{{ event.speaker_image_3.url }}" alt=""></figure>
+                                                </li>
+                                            {% endif %}
+                                            {% if event.speaker_image_4 %}
+                                                <li>
+                                                    <figure class="image"><img src="{{ event.speaker_image_4.url }}" alt=""></figure>
+                                                </li>
+                                            {% endif %}
+                                            {% if event.speaker_image_5 %}
+                                                <li>
+                                                    <figure class="image"><img src="{{ event.speaker_image_5.url }}" alt=""></figure>
+                                                </li>
+                                            {% endif %}
+                                            {% if event.speaker_image_6 %}
+                                                <li style="padding-top: 10px;">
+                                                ...
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-lg-12 col-md-12 col-sm-12 event-block">
+                            <div class="event-block-one wow fadeInUp animated" data-wow-delay="200ms" data-wow-duration="1500ms">
+                                <div class="inner-box">
+                                    <figure class="image-box"> 
+                                        <img src="{{ static('assets/img/event/event-2.jpg') }}" alt="">
+                                        <a href="#"><i class="fas fa-link"></i></a>
+                                    </figure>
+                                    <div class="lower-content">
+                                        {# current date using now #}
+                                        {% now "b" as current_month %}
+                                        {% now "d" as current_day %}
+                                        
+                                        <div class="post-date"><h3>{{current_day}}<span>{{current_month|upper}}</span></h3></div>
+                                        <h4><a href="#">Event Listings Not Found </a></h4>
+                                        <ul class="info clearfix">
+                                            <li><i class="icon-21"></i>Auckland Park Campus Kingsway, UJ.</li>
+                                            <li><i class="icon-22"></i>08:00AM - 04:00PM</li>
+                                        </ul>
+                                        <p>No event listings to display yet; kindly check back later.</p>
+                                        <ul class="thumb-list clearfix">
+                                            <li>
+                                                <figure class="image"><img src="{{ static('assets/img/resource/thumb-1.png') }}" alt=""></figure>
+                                            </li>
+                                            <li>
+                                                <figure class="image"><img src="{{ static('assets/img/resource/thumb-2.png') }}" alt=""></figure>
+                                            </li>
+                                            <li>
+                                                <figure class="image"><img src="{{ static('assets/img/resource/thumb-3.png') }}" alt=""></figure>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+        
+            {# pagination using only jinja, no js #}
+            {% if is_paginated %}
+                <div class="pagination-wrapper centred" style="margin-top: 30px;">
+                    <ul class="pagination clearfix">                        
+                        {# init total pages #}
+                        {% set pagesNum = paginator.page_range|count + 1 %}
+                        {# init total items in the pagination #}
+                        {% set totalItems = paginator.count %}
+                        {# init start number for the pagination range #}
+                        {% set starterCount = 1 %}
+                        {# init current page in the pagination #}
+                        {% set currentPage = page_obj.number  %}
+                        {# starting  highest page number to show in pagination numbering  eg 1, 2, 3, 4 #}
+                        {% set controller = 4 %}
+                        {# set the range of the pagination per time#}
+                        {% set numberRange = totalItems %}
+
+                        {# set left navigation link #}
+                        {% set previous_pagination_link = "" %}
+                        {% if page_obj.number - 1  >  0 %}
+                            {% set previous_pagination_link = previous_pagination_link + "?page=" + (currentPage - 1)|string %}
+                        {% else %}
+                            {% set previous_pagination_link = previous_pagination_link + "#" %}
+                        {% endif %}
+                        
+                        {# left pagination #}
+                        {% if previous_pagination_link != "#" %}
+                            <li><a href="{{previous_pagination_link}}"><i class="fas fa-angle-left"></i></a></li>
+                        {% endif %}
+
+
+                        {# check if the current page is greater than the current controller, if true,
+                            increase the number range by the total item plus 1 since a range 
+                            will stop at one shy in a loop and then set starter count to the
+                            current page minus 2 so that next page will start at 2 for instance
+                        #}
+
+                        {% if currentPage > controller  %}
+                            {% set numberRange = totalItems + 1 %}
+                            {% set starterCount = currentPage - 4 %}
+                        {% else %}
+                            {% set numberRange = 6 %}
+                        {% endif %}
+
+                        {# page numbers to show #}
+                        {% if (pagesNum - numberRange - 1)  > 0 %}
+                            {% set numberRange = numberRange + (pagesNum - numberRange - 1) %}
+                        {% endif  %}
+                        {% if currentPage < pagesNum-1 and currentPage > 4 %}
+                            {% if (pagesNum - currentPage) >= 1 %}
+                                {% set starterCount = currentPage - 2 %}                                                  
+                            {% endif  %}
+                        {% elif currentPage+2 is divisibleby 5 and currentPage + 1 < pagesNum and currentPage - 2 > 0 %}
+                            {% set starterCount = currentPage - 2 %}
+                        {% elif currentPage+1 is divisibleby 5 and currentPage + 1 < pagesNum and currentPage - 1 > 0 %}
+                            {% set starterCount = currentPage - 1 %}
+                        {% endif %}
+
+                        
+                        {# loop and set the numbering #}
+                        {% for k in range(starterCount, numberRange) %}
+                            {% if k <= pagesNum  %}
+                                {# add the activate style for current page #}
+                                {% if currentPage==k %} 
+                                    <li><a href="?page={{k}}" class="current">{{k}}</a></li>
+                                    {% if not loop.first %}
+                                        {% set starterCount = starterCount + 1 %}
+                                        {% set numberRange = numberRange + 1 %}
+                                    {% endif %}
+                                {% elif loop.index <  pagesNum and k - 4 < starterCount %}
+                                    <li><a href="?page={{k}}">{{k}}</a></li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {# check if there is still more pages to show #}
+                        {% set pageLeft = (pagesNum - 1) - currentPage %}
+                        {% if  pageLeft > 1 and pagesNum-1 > 4 %}
+                            <li><a href="#">...</a></li>
+                        {% endif %} 
+                        
+                        {# set right navigation button #}
+                        {% set next_pagination_link = "" %}
+                        {% if currentPage + 1  <  pagesNum %}
+                            {% set next_pagination_link = next_pagination_link + "?page=" + (currentPage + 1)|string %}
+                        {% else %}
+                            {% set next_pagination_link = next_pagination_link + "#" %}
+                        {% endif %}
+                        
+                        {# right navigation #}
+                        {% if next_pagination_link != "#" %}
+                            <li><a href="{{next_pagination_link}}"><i class="fas fa-angle-right"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+        </section>
+        <!-- events-style-two end -->
+
+{% endblock pageContent %}
