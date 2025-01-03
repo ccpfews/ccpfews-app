@@ -44,8 +44,6 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin'
 SESSION_COOKIE_NAME = '__Host-sessionid'
 # Prefix CSRF cookie with '__Host-'
 CSRF_COOKIE_NAME = '__Host-csrftoken'
-# Server email
-SERVER_EMAIL = ENV.config('SERVER_EMAIL')
 
 # Captcha settings
 RECAPTCHA_PUBLIC_KEY = ENV.config('RECAPTCHA_PUBLIC_KEY_PRODUCTION')
