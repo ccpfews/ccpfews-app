@@ -61,3 +61,7 @@ def timesince(value):
         return message
     else:
         return '0 min. ago'
+
+
+def current_datetime(value):
+    return pendulum.now('Africa/Johannesburg')

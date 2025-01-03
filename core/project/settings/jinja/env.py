@@ -3,7 +3,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from jinja2 import Environment
 
-from .filters import dateformat, intcomma, timesince
+from .filters import current_datetime, dateformat, intcomma, timesince
 
 
 def JinjaEnvironment(**options):
@@ -17,8 +17,9 @@ def JinjaEnvironment(**options):
     })
     env.filters.update({
         'dateformat': dateformat,
-        'time_since': timesince,
-        'int_comma': intcomma,
+        'timesince': timesince,
+        'intcomma': intcomma,
+        'currentdatetime': current_datetime,
     })
 
     return env
