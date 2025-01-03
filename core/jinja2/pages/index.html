@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{# internal style #}
+{% block pageStyle %}
+    <style>
+        .news-block-two .inner-box .image-box:before, .news.image-box img, .news.image-box a  {
+            height: 350px;
+        }
+
+    </style>
+{% endblock pageStyle %}
+
+{% block pageContent %}
+    <!-- banner-section -->
+    {% include 'partials/__banners.html'%}
+    <!-- banner-section end -->
+
+
+    <!-- feature-section -->
+    {% include 'partials/__features.html' %}
+    <!-- feature-section end -->
+
+
+    <!-- about-style-four -->
+    {% include 'partials/__about.html' %}
+    <!-- about-style-four end -->
+
+
+    <!-- service-style-four -->
+    {% include 'partials/__services.html' %}
+    <!-- service-style-four end -->
+
+
+    <!-- choose us-section -->
+    {% include 'partials/__service_choices.html' %}
+    <!-- choose us-section end -->
+
+    {# events #}
+    {% if events %}
+        <!-- events-section -->
+        {% include 'partials/__events.html' %}
+        <!-- events-section end -->
+    {% endif %}
+
+    {# projects #}
+    {% if projects %}
+        <!-- testimonial-section -->
+        {% include 'partials/__project.html' %}
+        <!-- testimonial-section end -->
+     {% endif %}
+
+    {# teams #}
+     {% if teams %}
+        <!-- team-style-three -->
+        {% include 'partials/__team.html' %}
+        <!-- team-style-three end -->
+    {% endif %}
+
+    {# blog #}
+    {% if posts %}
+        <!-- news-style-two -->
+        {% include 'partials/__blog.html' %}
+        <!-- news-style-two end -->
+    {% endif %}
+
+    <!-- cta-style-two end -->
+{% endblock pageContent %}
