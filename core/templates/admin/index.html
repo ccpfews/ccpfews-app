@@ -1,0 +1,204 @@
+{% extends 'unfold/layouts/base_simple.html' %}
+{% load cache humanize i18n %}
+{% load custom_filters %}
+
+
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}
+    {% if subtitle %}
+        {{ subtitle }} |
+    {% endif %}
+
+    {{ title }} | {{ site_title|default:_('CCPFEWS site admin') }}
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_('CCPFEWS administration') }}
+        </a>
+    </h1>
+{% endblock %}
+
+{% block content %}
+
+
+    <div>
+        {% include "unfold/helpers/messages.html" %}
+    </div>
+
+    <div id="content" class="container mx-auto colM">
+        <div class="mx-auto">
+            <div class="flex  flex-row gap-4">
+                <nav class="bg-gray-100 flex gap-2 mb-8 p-1 rounded text-sm dark:bg-white/[.04]">
+                    <a href="/{{admin_path}}" class="flex flex-row font-medium items-center px-2.5 py-1 rounded  bg-white shadow-sm text-gray-700 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-900 dark:text-white">
+                        Dashboard
+                    </a>
+                    <a href="/{{admin_path}}/blog/blog/" class="flex flex-row font-medium items-center px-2.5 py-1 rounded  text-gray-400 hover:bg-gray-700/[.04] hover:text-gray-700 dark:hover:bg-white/[.04] dark:hover:text-white">
+                        Post
+                    </a>
+                    <a href="/{{admin_path}}/contacts/contact/" class="flex flex-row font-medium items-center px-2.5 py-1 rounded  text-gray-400 hover:bg-gray-700/[.04] hover:text-gray-700 dark:hover:bg-white/[.04] dark:hover:text-white">
+                        Contact Messages
+                    </a>
+                    <a href="/{{admin_path}}/contacts/consultation" class="flex flex-row font-medium items-center px-2.5 py-1 rounded  text-gray-400 hover:bg-gray-700/[.04] hover:text-gray-700 dark:hover:bg-white/[.04] dark:hover:text-white">
+                        Consultation
+                    </a>
+                </nav>
+                <nav class="bg-gray-100 flex gap-2 mb-8 p-1 rounded text-sm dark:bg-white/[.04] ml-auto">
+                    <a href="/{{admin_path}}/profiles/profile/" class="flex flex-row font-medium items-center px-2.5 py-1 rounded  bg-white shadow-sm text-gray-700 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-900 dark:text-white">
+                        Team
+                    </a>
+                    <a href="/{{admin_path}}/defender/accessattempt/" class="flex flex-row font-medium items-center px-2.5 py-1 rounded  text-gray-400 hover:bg-gray-700/[.04] hover:text-gray-700 dark:hover:bg-white/[.04] dark:hover:text-white">
+                        Security
+                    </a>
+                    <a href="{% url 'home' %}" class="flex flex-row font-medium items-center px-2.5 py-1 rounded  bg-white shadow-sm text-gray-700 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-900 dark:text-white">
+                        Visit Site
+                    </a>
+                </nav>
+            </div>
+
+            <div class="flex  flex-row gap-8 mb-8 flex-col lg:flex-row">
+                <div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800 lg:w-1/3">
+                    <div class="flex-grow relative">
+                        <p class="leading-relaxed mb-0 text-sm">
+                            Unread Contact Messages
+                        </p>
+                        <div class="font-medium text-2xl text-gray-700 dark:text-gray-200">
+                            {{contact_unread_counter|intcomma}}
+                        </div>
+                    </div>
+                </div>
+                <div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800 lg:w-1/3">
+                    <div class="flex-grow relative">
+                        <p class="leading-relaxed mb-0 text-sm">
+                            Unread Consultation Messages
+                        </p>
+                        <div class="font-medium text-2xl text-gray-700 dark:text-gray-200">
+                            {{consult_unread_counter|intcomma}}
+                        </div>
+                    </div>
+                </div>
+                <div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800 lg:w-1/3">
+                    <div class="flex-grow relative">
+                        <p class="leading-relaxed mb-0 text-sm">
+                            Ongoing Projects
+                        </p>
+                        <div class="font-medium text-2xl text-gray-700 dark:text-gray-200">
+                            {{ongoing_project_counter|intcomma}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex  flex-row gap-8 mb-8 flex-col lg:flex-row">
+                <div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800 lg:w-1/2">
+                 
+                    <div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800">
+                        <div class="flex-grow relative">
+                            <p class="leading-relaxed mb-0 text-sm">
+                                Unread Contact Messages  in last 24hrs
+                            </p>
+                            <br>
+                            <div class="relative w-full">
+                                <canvas class="chart"  data-type="line" data-value="{&quot;labels&quot;: [&quot;12am&quot;, &quot;1am&quot;, &quot;2am&quot;, &quot;3am&quot;, &quot;4am&quot;, &quot;5am&quot;, &quot;6am&quot;, &quot;7am&quot;, &quot;8am&quot;, &quot;9am&quot;, &quot;10am&quot;, &quot;11am&quot;, &quot;12pm&quot;, &quot;1pm&quot;, &quot;2pm&quot;, &quot;3pm&quot;, &quot;4pm&quot;, &quot;5pm&quot;, &quot;6pm&quot;, &quot;7pm&quot;, &quot;8pm&quot;, &quot;9pm&quot;, &quot;10pm&quot;, &quot;11pm&quot;], &quot;datasets&quot;: [{&quot;data&quot;: {{'Message'|contact_unread_message_chart}}, &quot;borderColor&quot;: &quot;#f43f5e&quot;}]}"  ></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-grow relative">
+                        <div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800">
+                            <div class="flex-grow relative">
+                                <div class="font-medium text-2xl text-gray-700 dark:text-gray-200 mb-2">
+                                    <p style="font-size: 14px;">Total Contact Messages: {{contact_counter|intcomma}} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="bg-gray-200 dark:border-gray-800 my-8" />
+                        <div class="flex  flex-col gap-8">
+                            <div class="">
+                                <div class="flex flex-row mb-2.5 text-sm">
+                                    <h3 class="text-sm">
+                                        {# current year #}
+                                        {% now 'Y' as current_year %}
+
+                                        Total Events in {{current_year}}
+                                    </h3>
+                                    <strong class="font-semibold ml-auto text-gray-700 dark:text-gray-200">
+                                        {{event_counter_year|intcomma}}
+                                    </strong>
+                                </div>
+                                <div class="bg-gray-200 flex flex-row h-1 rounded overflow-hidden dark:bg-white/10">
+                                    <div class="bg-primary-500 h-1 rounded-full" style="width: 100%; background-color: rgb(227,60,90);"></div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="flex flex-row mb-2.5 text-sm">
+                                    <h3 class="text-sm">
+                                        Total Projects
+                                    </h3>
+                                    <strong class="font-semibold ml-auto text-gray-700 dark:text-gray-200">
+                                    {{project_counter|intcomma}}
+                                    </strong>
+                                </div>
+                                <div class="bg-gray-200 flex flex-row h-1 rounded overflow-hidden dark:bg-white/10">
+                                    <div class="bg-primary-500 h-1 rounded-full" style="width: 100%; background-color: rgb(227,60,90);"></div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="flex flex-row mb-2.5 text-sm">
+                                    <h3 class="text-sm">
+                                        Total Researchers
+                                    </h3>
+                                    <strong class="font-semibold ml-auto text-gray-700 dark:text-gray-200">
+                                    {{team_counter|intcomma}}
+                                    </strong>
+                                </div>
+                                <div class="bg-gray-200 flex flex-row h-1 rounded overflow-hidden dark:bg-white/10">
+                                    <div class="bg-primary-500 h-1 rounded-full" style="width: 100%; background-color: rgb(227,60,90);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex  flex-col gap-8 lg:w-1/2">
+                    <div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800">
+                        <div class="flex-grow relative">
+                            <p class="leading-relaxed mb-0 text-sm">
+                                Blog Post Views
+                            </p>
+                            <br>
+                            <div class="relative w-full">
+                                <canvas class="chart"  data-type="line" data-value="{&quot;labels&quot;: [&quot;12am&quot;, &quot;1am&quot;, &quot;2am&quot;, &quot;3am&quot;, &quot;4am&quot;, &quot;5am&quot;, &quot;6am&quot;, &quot;7am&quot;, &quot;8am&quot;, &quot;9am&quot;, &quot;10am&quot;, &quot;11am&quot;, &quot;12pm&quot;, &quot;1pm&quot;, &quot;2pm&quot;, &quot;3pm&quot;, &quot;4pm&quot;, &quot;5pm&quot;, &quot;6pm&quot;, &quot;7pm&quot;, &quot;8pm&quot;, &quot;9pm&quot;, &quot;10pm&quot;, &quot;11pm&quot;], &quot;datasets&quot;: [{&quot;data&quot;:{{'Blog Post'|blog_views_chart}}, &quot;borderColor&quot;: &quot;#9333ea&quot;}]}"  ></canvas>
+                            </div>
+                        </div>
+                        <div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800">
+                            <div class="flex-grow relative">
+                                <div class="font-medium text-2xl text-gray-700 dark:text-gray-200 mb-2">
+                                    <p style="font-size: 14px;">Total Post: {{post_views_counter|intcomma}} </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800">
+                        <div class="flex-grow relative">
+                            <p class="leading-relaxed mb-0 text-sm">
+                                Unread Consultation Messages In Last 24hrs
+                            </p>
+                            <br>
+                            <div class="relative w-full">
+                                <canvas class="chart"  data-type="line" data-value="{&quot;labels&quot;: [&quot;12am&quot;, &quot;1am&quot;, &quot;2am&quot;, &quot;3am&quot;, &quot;4am&quot;, &quot;5am&quot;, &quot;6am&quot;, &quot;7am&quot;, &quot;8am&quot;, &quot;9am&quot;, &quot;10am&quot;, &quot;11am&quot;, &quot;12pm&quot;, &quot;1pm&quot;, &quot;2pm&quot;, &quot;3pm&quot;, &quot;4pm&quot;, &quot;5pm&quot;, &quot;6pm&quot;, &quot;7pm&quot;, &quot;8pm&quot;, &quot;9pm&quot;, &quot;10pm&quot;, &quot;11pm&quot;], &quot;datasets&quot;: [{&quot;data&quot;: {{'Message'|consultation_unread_message_chart}}, &quot;borderColor&quot;: &quot;#f43f5e&quot;}]}"  ></canvas>
+                            </div>
+                            <div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800">
+                                <div class="flex-grow relative">
+                                    <div class="font-medium text-2xl text-gray-700 dark:text-gray-200 mb-2">
+                                        <p style="font-size: 14px;">Total Messages: {{consult_unread_counter|intcomma}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
