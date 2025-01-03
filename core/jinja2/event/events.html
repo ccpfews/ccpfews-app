@@ -37,27 +37,27 @@
                                         <p>{{event.event_description_one|truncate(75, true)}}</p>
                                         <ul class="thumb-list clearfix">
                                             <li>
-                                                <figure class="image"><img src="{{ event.speaker_image_1.url }}" alt=""></figure>
+                                                <figure class="image"><img src="{{ event.speaker_image_1.url }}" alt="{{event.title}} speaker image one"></figure>
                                             </li>
 
                                             {% if event.speaker_image_2 %}
                                                 <li>
-                                                    <figure class="image"><img src="{{ event.speaker_image_2.url }}" alt=""></figure>
+                                                    <figure class="image"><img src="{{ event.speaker_image_2.url }}" alt="{{event.title}} speaker image two"></figure>
                                                 </li>
                                             {% endif %}
                                             {% if event.speaker_image_3 %}
                                                 <li>
-                                                    <figure class="image"><img src="{{ event.speaker_image_3.url }}" alt=""></figure>
+                                                    <figure class="image"><img src="{{ event.speaker_image_3.url }}" alt="{{event.title}} speaker image three"></figure>
                                                 </li>
                                             {% endif %}
                                             {% if event.speaker_image_4 %}
                                                 <li>
-                                                    <figure class="image"><img src="{{ event.speaker_image_4.url }}" alt=""></figure>
+                                                    <figure class="image"><img src="{{ event.speaker_image_4.url }}" alt="{{event.title}} speaker image four"></figure>
                                                 </li>
                                             {% endif %}
                                             {% if event.speaker_image_5 %}
                                                 <li>
-                                                    <figure class="image"><img src="{{ event.speaker_image_5.url }}" alt=""></figure>
+                                                    <figure class="image"><img src="{{ event.speaker_image_5.url }}" alt="{{event.title}} speaker image five"></figure>
                                                 </li>
                                             {% endif %}
                                             {% if event.speaker_image_6 %}
@@ -75,7 +75,7 @@
                             <div class="event-block-one wow fadeInUp animated" data-wow-delay="200ms" data-wow-duration="1500ms">
                                 <div class="inner-box">
                                     <figure class="image-box"> 
-                                        <img src="{{ static('assets/img/event/event-2.jpg') }}" alt="">
+                                        <img src="{{ static('assets/img/event/event-2.jpg') }}" alt="no event image">
                                         <a href="#"><i class="fas fa-link"></i></a>
                                     </figure>
                                     <div class="lower-content">
@@ -92,13 +92,13 @@
                                         <p>No event listings to display yet; kindly check back later.</p>
                                         <ul class="thumb-list clearfix">
                                             <li>
-                                                <figure class="image"><img src="{{ static('assets/img/resource/thumb-1.png') }}" alt=""></figure>
+                                                <figure class="image"><img src="{{ static('assets/img/resource/thumb-1.png') }}" alt="event speaker thumbnail one"></figure>
                                             </li>
                                             <li>
-                                                <figure class="image"><img src="{{ static('assets/img/resource/thumb-2.png') }}" alt=""></figure>
+                                                <figure class="image"><img src="{{ static('assets/img/resource/thumb-2.png') }}" alt="event speaker thumbnail two"></figure>
                                             </li>
                                             <li>
-                                                <figure class="image"><img src="{{ static('assets/img/resource/thumb-3.png') }}" alt=""></figure>
+                                                <figure class="image"><img src="{{ static('assets/img/resource/thumb-3.png') }}" alt="event speaker thumbnail three"></figure>
                                             </li>
                                         </ul>
                                     </div>

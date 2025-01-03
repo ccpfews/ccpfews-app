@@ -69,7 +69,7 @@
 
                             <div class="image-box clearfix">
                                 {% for selection in random_selection|reverse %}
-                                    <figure class="image"><img src="{{selection.url}}" alt="" style="height: 250px;">
+                                    <figure class="image"><img src="{{selection.url}}" alt="blog image" style="height: 250px;">
                                     </figure>
                                 {% endfor %}
                             </div>
@@ -101,7 +101,7 @@
                                 <div class="shape-2" style="background-image: url(/static/assets/img/shape/shape-74.png);">
                                 </div>
                             </div>
-                            <figure class="author-thumb"><img src="{{ blog.author.image.url }}" alt="">
+                            <figure class="author-thumb"><img src="{{ blog.author.image.url }}" alt="blog author image">
                             </figure>
                             <div class="inner">
                                 <h3>About {{blog.author.first_name}} {{blog.author.last_name}}</h3>
