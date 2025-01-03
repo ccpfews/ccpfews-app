@@ -45,11 +45,6 @@ SESSION_COOKIE_NAME = '__Host-sessionid'
 # Prefix CSRF cookie with '__Host-'
 CSRF_COOKIE_NAME = '__Host-csrftoken'
 
-# Captcha settings
-RECAPTCHA_PUBLIC_KEY = ENV.config('RECAPTCHA_PUBLIC_KEY_PRODUCTION')
-RECAPTCHA_PRIVATE_KEY = ENV.config('RECAPTCHA_PRIVATE_KEY_PRODUCTION')
-RECAPTCHA_REQUIRED_SCORE = ENV.config('RECAPTCHA_REQUIRED_SCORE_PRODUCTION', cast=float)
-
 # Cors settings
 CORS_ALLOWED_ORIGINS = [
     'https://ccpfews.uj.ac.za',
