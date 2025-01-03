@@ -28,16 +28,9 @@ RECAPTCHA_REQUIRED_SCORE = ENV.config('RECAPTCHA_REQUIRED_SCORE', cast=float)
 # CSP Settings
 CSP_DEFAULT_SRC = ("'none'",)
 CSP_SCRIPT_SRC = (
-    "'self'",
-    'https://www.google.com',
-    'https://googleapis.com',
-    'https://www.googletagmanager.com',
-    'https://www.gstatic.com',
-    'https://fonts.googleapis.com',
-    'https://use.fontawesome.com',
-    'https://ajax.googleapis.com',
-    "'unsafe-inline'",
-    'blob:',
+    "'self'", 'https://www.google.com', 'https://googleapis.com', 'https://www.googletagmanager.com',
+    'https://www.gstatic.com', 'https://fonts.googleapis.com', 'https://use.fontawesome.com',
+    'https://ajax.googleapis.com', 'https://maps.google.com/', "'unsafe-inline'", 'blob:'
 )
 CSP_CONNECT_SRC = ("'self'")
 CSP_FONT_SRC = (
@@ -45,11 +38,8 @@ CSP_FONT_SRC = (
 )
 CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
 CSP_STYLE_SRC_ELEM = (
-    "'self'",
-    'https://fonts.gstatic.com',
-    'https://fonts.googleapis.com',
-    'https://use.fontawesome.com',
-    "'unsafe-inline'",
+    "'self'", 'https://fonts.gstatic.com', 'https://fonts.googleapis.com', 'https://use.fontawesome.com',
+    "'unsafe-inline'"
 )
 
 CSP_IMG_SRC = ("'self'", 'blob:', 'data:')
@@ -57,6 +47,7 @@ CSP_MEDIA_SRC = ("'self'")
 CSP_FORM_ACTION = ("'self'")  # Allow form submissions to URLs from the same origin
 CSP_BASE_URI = ("'none'")  # Disallow base URLs from the same origin
 CSP_FRAME_ANCESTORS = ("'none'")
+CSP_FRAME_SRC = ("'self'", 'https://www.google.com/', 'https://maps.google.com/', 'http://www.youtube.com')
 # exclude admin path``
 CSP_EXCLUDE_URL_PREFIXES = (f'/{ADMIN_PATH}/',)
 # report url
