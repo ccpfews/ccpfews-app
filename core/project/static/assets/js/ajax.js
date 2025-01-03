@@ -109,17 +109,18 @@ dormElement.submitBtn.addEventListener("click", (e) => {
             field.textContent = "";
 
             //ensure error display is none
+            field.textContent = ''
             field.style.display = "none";
 
             //reset all input error
             let inputs = document.querySelectorAll("input");
             Array.from(inputs).forEach((input) => {
-              input.style.border = "none";
+              input.style.border = "1px solid rgba(255,255,255,0.2)";
             });
 
             //reset text area
             let textarea_field = document.querySelector("textarea");
-            textarea_field.style.border = "none";
+            textarea_field.style.border = "1px solid rgba(255,255,255,0.2)";
           }
         );
       }
