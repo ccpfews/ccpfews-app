@@ -1,5 +1,7 @@
+from django import forms
 from django.contrib import admin, messages
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.utils.timezone import datetime, utc
 from unfold.admin import ModelAdmin
 
@@ -17,7 +19,7 @@ def publish_action(modeladmin, request, querryset):
 
 
 class BlogAdmin(ModelAdmin):
-    list_display = ['title', 'author', 'category', 'publish', 'schedule_post', 'date_updated']
+    list_display = ['post_id', 'title', 'author', 'category', 'publish', 'schedule_post', 'date_updated']
     list_display_links = ['title', 'author', 'category', 'date_updated']
     list_editable = ['publish']
     list_filter = ['publish']
@@ -37,22 +39,31 @@ class BlogAdmin(ModelAdmin):
             'classes': ['wide', 'extrapretty'],
             'fields': ['title', 'author', 'category', 'tags']
         }],
-        ['Details', {
+        [
+            'Details', {
+                'classes': ['collapse', 'wide', 'extrapretty'],
+                'fields': ['post_one', 'post_two', 'post_three']
+            }
+        ],
+        ['Social', {
             'classes': ['collapse', 'wide', 'extrapretty'],
-            'fields': ['post']
+            'fields': ['facebook', 'twitter', 'linkedin']
         }],
         [
             'Media', {
                 'classes': ['collapse', 'wide', 'extrapretty'],
                 'fields': [
-                    'featured_image', 'gallery_image_1', 'gallery_image_2', 'gallery_image_3', 'gallery_image_4'
+                    'featured_image',
+                    'gallery_image_1',
+                    'gallery_image_2',
+                    'gallery_image_3',
                 ]
             }
         ],
         [
             'Visibility', {
                 'classes': ['collapse', 'wide', 'extrapretty'],
-                'fields': ['publish', 'schedule_publish', 'date_updated']
+                'fields': ['publish', 'date_published', 'schedule_publish', 'date_updated']
             }
         ],
     ]
@@ -68,5 +79,39 @@ class BlogAdmin(ModelAdmin):
                 '<span style="color:#453F3F; font-weight:bolder; background:#CBCBCB; font-size:14px; padding: 5px 8px; border:1px solid #453F3F; border-radius:10px;">*No</span>'  # noqa: E501
             )
 
+# override field
 
+    def formfield_for_dbfield(self, db_field, request, **kwargs):  # noqa: E301
+
+        if db_field.name == 'category':
+            # redeclare label with a class
+            label = mark_safe(
+                f'<label class="font-medium mb-2 text-gray-900 text-sm dark:text-gray-200">{db_field.verbose_name}</label>'  # noqa: E501
+            )
+            # Override the status field to use MultipleChoiceField with SelectMultiple widget
+            kwargs['widget'] = forms.SelectMultiple(
+                attrs={
+                    'class':
+                        'border bg-white font-medium min-w-20 rounded-md shadow-sm text-gray-500 text-sm focus:ring focus:ring-primary-300 focus:border-primary-600 focus:outline-none group-[.errors]:border-red-600 group-[.errors]:focus:ring-red-200 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:focus:border-primary-600 dark:focus:ring-primary-700 dark:focus:ring-opacity-50 dark:group-[.errors]:border-red-500 dark:group-[.errors]:focus:ring-red-600/40 px-3 py-2 w-full pr-8 max-w-2xl appearance-none',  # noqa: E501
+                    'style':
+                        'height: 120px;'  # Set the height for the select field
+                }
+            )
+            kwargs['choices'] = [
+                ('Research', 'Research'),
+                ('Innovation', 'Innovation'),
+                ('Webinar', 'Webinar'),
+                ('Showcase', 'Showcase'),
+                ('Funding', 'Funding'),
+                ('News/Events', 'News/Events'),
+            ]
+            kwargs['label'] = label
+            kwargs['help_text'] = db_field.help_text
+            kwargs['initial'] = ['Research']
+
+            return forms.MultipleChoiceField(**kwargs)
+        return super().formfield_for_dbfield(db_field, request, **kwargs)
+
+
+# noqa: E305
 admin.site.register(Blog, BlogAdmin)
