@@ -32,10 +32,18 @@ class Home(TemplateView):
             publish=True,
             post_scheduling__lte=current_timestamp,
         )[:4]
-        context['projects'] = Project.objects.order_by('-date_published').filter(
-            publish=True,
-            post_scheduling__lte=current_timestamp,
-        )[:4]
+
+        context['projects'] = Project.objects.filter(publish=True, post_scheduling__lte=current_timestamp).annotate(
+            priority=Case(
+                When(author__first_name__icontains='CCPFEWS', then=Value(0)),
+                When(author__role__icontains='Board', then=Value(1)),
+                When(author__role__icontains='Director', then=Value(2)),
+                When(author__title__icontains='Prof', then=Value(3)),
+                default=Value(5),  # Default value for other categories
+                output_field=IntegerField(),
+            )
+        ).order_by('priority', '-date_published')[:4]
+
         context['posts'] = Blog.objects.order_by('-date_published').filter(
             publish=True,
             schedule_publish__lte=current_timestamp,
@@ -60,6 +68,7 @@ class About(TemplateView):
                 output_field=IntegerField(),
             )
         ).order_by('priority', '-creation_date')[:3]
+
         context['projects'] = Project.objects.filter(publish=True, post_scheduling__lte=current_timestamp).annotate(
             priority=Case(
                 When(author__first_name__icontains='CCPFEWS', then=Value(0)),
