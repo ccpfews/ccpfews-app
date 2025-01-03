@@ -13,13 +13,13 @@ UNFOLD = {
     'SITE_URL': '/',
     # 'SITE_ICON': lambda request: static('assets/img/favicon.png'),  # both modes, optimize for 32px height
     'SITE_ICON': {
-        'light': lambda request: static('assets/img/favicon.png'),  # light mode
-        'dark': lambda request: static('assets/img/favicon.png'),  # dark mode
+        'light': lambda request: static('assets/favicon/favicon.ico'),  # light mode
+        'dark': lambda request: static('assets/favicon/favicon.ico'),  # dark mode
     },
     # 'SITE_LOGO': lambda request: static('logo.svg'),  # both modes, optimize for 32px height
     'SITE_LOGO': {
-        'light': lambda request: static('assets/img/logo.png'),  # light mode
-        'dark': lambda request: static('assets/img/logo.png'),  # dark mode
+        'light': lambda request: static('assets/img/logo.jpg'),  # light mode
+        'dark': lambda request: static('assets/img/logo.jpg'),  # dark mode
     },
     'SITE_SYMBOL': 'speed',  # symbol from icon set
     'SHOW_HISTORY': True,  # show/hide 'History' button, default: True
@@ -33,9 +33,9 @@ UNFOLD = {
     'STYLES': [
         lambda request: static('assets/css/unfold/style.css'),
     ],
-    'SCRIPTS': [
-        lambda request: static('assets/js/unfold/script.js'),
-    ],
+    # 'SCRIPTS': [
+    #     lambda request: static('assets/js/unfold/script.js'),
+    # ],
     'COLORS': {
         'primary': {
             '50': '250 245 255',
@@ -75,8 +75,8 @@ UNFOLD = {
                     {
                         'title': _('Access Attempts'),
                         'icon': 'running_with_errors',  # Supported icon set: https://fonts.google.com/icons
-                        'link': lambda request: f'/{admin_path}/defender/accessattempt/',  # noqa: E501
-                        'permission': lambda request: request.user.is_superuser,  # noqa: E501
+                        'link': lambda request: f'/{admin_path}/defender/accessattempt/',
+                        'permission': lambda request: request.user.is_superuser,
                     },
                 ],
             },
@@ -87,32 +87,62 @@ UNFOLD = {
                     {
                         'title': _('Users'),
                         'icon': 'badge',
-                        'link': lambda request: f'/{admin_path}/users/user/',  # noqa: E501
-                        'permission': lambda request: request.user.is_superuser,  # noqa: E501
+                        'link': lambda request: f'/{admin_path}/users/user/',
+                        'permission': lambda request: request.user.is_superuser,
                     },
                     {
                         'title': _('Groups'),
                         'icon': 'groups',
-                        'link': lambda request: f'/{admin_path}/auth/group/',  # noqa: E501
-                        'permission': lambda request: request.user.is_superuser,  # noqa: E501
-                    },
-                    {
-                        'title': _('Messages'),
-                        'icon': 'support',
-                        'link': lambda request: f'/{admin_path}/contact/contact/',  # noqa: E501
-                        'permission': lambda request: request.user.is_superuser,  # noqa: E501
-                    },
-                    {
-                        'title': _('Profile'),
-                        'icon': 'perm_contact_calendar',  # Supported icon set: https://fonts.google.com/icons
-                        'link': lambda request: f'/{admin_path}/profiles/profile/',  # noqa: E501
-                        'permission': lambda request: request.user.is_superuser,  # noqa: E501
+                        'link': lambda request: f'/{admin_path}/auth/group/',
+                        'permission': lambda request: request.user.is_superuser,
                     },
                     {
                         'title': _('Site Info'),
                         'icon': 'dns',
-                        'link': lambda request: f'/{admin_path}/sites/site/',  # noqa: E501
-                        'permission': lambda request: request.user.is_superuser,  # noqa: E501
+                        'link': lambda request: f'/{admin_path}/sites/site/',
+                        'permission': lambda request: request.user.is_superuser,
+                    },
+                ],
+            },
+            {
+                'separator': True,  # Top border
+                'items': [
+
+                    {
+                        'title': _('Contact Messages'),
+                        'icon': 'support',
+                        'link': lambda request: f'/{admin_path}/contacts/contact/',
+                        'permission': lambda request: request.user.is_superuser,
+                    },
+                    {
+                        'title': _('Consultation'),
+                        'icon': 'headset_mic',
+                        'link': lambda request: f'/{admin_path}/contacts/consultation/',
+                        'permission': lambda request: request.user.is_superuser,
+                    },
+                    {
+                        'title': _('Team'),
+                        'icon': 'perm_contact_calendar',
+                        'link': lambda request: f'/{admin_path}/profiles/profile/',
+                        'permission': lambda request: request.user.is_superuser,
+                    },
+                    {
+                        'title': _('Blog'),
+                        'icon': 'post_add',
+                        'link': lambda request: f'/{admin_path}/blog/blog/',
+                        'permission': lambda request: request.user.is_superuser,
+                    },
+                    {
+                        'title': _('Events'),
+                        'icon': 'map',
+                        'link': lambda request: f'/{admin_path}/events/event/',
+                        'permission': lambda request: request.user.is_superuser,
+                    },
+                    {
+                        'title': _('Projects'),
+                        'icon': 'biotech',
+                        'link': lambda request: f'/{admin_path}/research/project/',
+                        'permission': lambda request: request.user.is_superuser,
                     },
                 ],
             },
