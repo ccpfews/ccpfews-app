@@ -3,6 +3,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import Group, User
 from django.contrib.sites.models import Site
+from django.core.exceptions import PermissionDenied
 from django.forms import Textarea, TextInput  # noqa: I101
 from django.utils.safestring import mark_safe
 from import_export import resources
@@ -26,13 +27,14 @@ class ProfileResource(resources.ModelResource):
         model = Profile
         skip_unchanged = True
         report_skipped = True
-        import_id_fields = [
-            'research_type', 'research_status', 'graduate_status', 'graduation_date', 'industry_job', 'linkedin_url',
-            'google_scholar_url', 'researchgate_url', 'publish', 'title', 'first_name', 'last_name', 'role', 'email',
-            'gender', 'about', 'short_bio', 'qualifications', 'skillset'
-        ]
-        exclude = ['profile_id', 'image']
-        export_id_fields = ['profile_id']
+        import_id_fields = ['profile_id']
+
+    def export(self, queryset=None, *args, **kwargs):
+        """
+        override the export action by disabling it
+        and rendering an error page
+        """
+        raise PermissionDenied
 
 
 class ProfileAdmin(ModelAdmin, ImportExportModelAdmin):

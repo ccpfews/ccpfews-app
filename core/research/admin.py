@@ -1,7 +1,11 @@
 from django import forms
 from django.contrib import admin, messages
+from django.core.exceptions import PermissionDenied
 from django.utils.safestring import mark_safe
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 from unfold.admin import ModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm
 
 from .models.books import Book
 from .models.journals import Journal
@@ -16,6 +20,22 @@ def publish_action(modeladmin, request, querryset):
     else:
         querryset.update(publish=True)
         messages.add_message(request, messages.SUCCESS, 'selected list published successfully')
+
+
+class ProjectResource(resources.ModelResource):
+
+    class Meta:
+        model = Project
+        skip_unchanged = True
+        report_skipped = True
+        import_id_fields = ['profile_id']
+
+    def export(self, queryset=None, *args, **kwargs):
+        """
+        override the export action by disabling it
+        and rendering an error page
+        """
+        raise PermissionDenied
 
 
 class BookAdmin(ModelAdmin):
@@ -116,7 +136,10 @@ class JournalAdmin(ModelAdmin):
     ]
 
 
-class ProjectAdmin(ModelAdmin):
+class ProjectAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+    resource_class = ProjectResource
     list_display = ['title', 'category', 'tags', 'status', 'publish', 'date_updated']
     list_display_links = ['title', 'category', 'date_updated']
     list_filter = ['publish', 'category', 'status']

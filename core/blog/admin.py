@@ -1,9 +1,13 @@
 from django import forms
 from django.contrib import admin, messages
+from django.core.exceptions import PermissionDenied
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.timezone import datetime, utc
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 from unfold.admin import ModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm
 
 from .models.blogs import Blog
 
@@ -18,7 +22,26 @@ def publish_action(modeladmin, request, querryset):
         messages.add_message(request, messages.SUCCESS, 'selected list published successfully')
 
 
-class BlogAdmin(ModelAdmin):
+class BlogResource(resources.ModelResource):
+
+    class Meta:
+        model = Blog
+        skip_unchanged = True
+        report_skipped = True
+        import_id_fields = ['event_id']
+
+    def export(self, queryset=None, *args, **kwargs):
+        """
+        override the export action by disabling it
+        and rendering an error page
+        """
+        raise PermissionDenied
+
+
+class BlogAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+    resource_class = BlogResource
     list_display = ['post_id', 'title', 'author', 'category', 'publish', 'schedule_post', 'date_updated']
     list_display_links = ['title', 'author', 'category', 'date_updated']
     list_editable = ['publish']

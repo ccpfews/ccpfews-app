@@ -1,12 +1,34 @@
 from django import forms
 from django.contrib import admin
+from django.core.exceptions import PermissionDenied
 from django.utils.safestring import mark_safe
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 from unfold.admin import ModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm
 
 from .models.events import Event
 
 
-class EventAdmin(ModelAdmin):
+class EventResource(resources.ModelResource):
+
+    class Meta:
+        model = Event
+        skip_unchanged = True
+        report_skipped = True
+
+    def export(self, queryset=None, *args, **kwargs):
+        """
+        override the export action by disabling it
+        and rendering an error page
+        """
+        raise PermissionDenied
+
+
+class EventAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+    resource_class = EventResource
     list_display = ['title', 'speakers', 'category', 'tags', 'publish', 'date_updated']
     list_display_links = ['title', 'speakers', 'category', 'date_updated']
     list_filter = ['publish', 'category']
