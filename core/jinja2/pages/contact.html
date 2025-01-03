@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+
+{% block pageContent %}
+    <!-- google-map-section -->
+    <section class="google-map-section" style="margin-top: 130px;">
+        <div class="map-inner">
+            <div class="map-container">
+                <div style="max-width:100%;list-style:none; transition: none;overflow:hidden;width:100%;height:500px;">
+                    <div id="google-maps-canvas" style="height:500px; width:100%;max-width:100%;">
+                        <iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                            style="border:0; margin-top: -150px;"
+                            src="https://maps.google.com/maps?f=l&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=University+of+Johannesburg+Auckland+Park&amp;aq=t&amp;sll=-26.1823923242336, 27.995956728836937&amp;ie=UTF8&amp;ll=-26.1823923242336, 27.995956728836937&amp;z=17&amp;om=0&amp;iwloc=addr&amp;iwd=0&amp;layer=0&amp;output=embed&amp;t=k"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="info-section">
+            <div class="auto-container">
+                <div class="info-inner clearfix">
+                    <div class="single-info-box">
+                        <div class="icon-box"><i class="icon-23"></i></div>
+                        <h4>Office Location</h4>
+                        <p>Auckland Park Kingsway Campus <br />
+                            University of Johannesburg.</p>
+                    </div>
+                    <div class="single-info-box">
+                        <div class="icon-box"><i class="icon-59"></i></div>
+                        <h4>Phone Number</h4>
+                        <p><a href="tel:+27115592389">+27 (11) 559-2389</a></p>
+                    </div>
+                    <div class="single-info-box">
+                        <div class="icon-box"><i class="icon-60"></i></div>
+                        <h4>Email Address</h4>
+                        <p><a href="mailto:nnwulu@uj.ac.za">nnwulu@uj.ac.za</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- google-map-section end -->
+
+
+
+    {% for get_message in messages if get_message %}
+        <!-- sidebar-page-container -->
+        <section  id="contact_msg" class="sidebar-page-container blog-details sec-pad-2" style="padding-top:60px; margin-bottom: -300px;">
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 content-side">
+                        <div class="blog-details-content"> 
+                            <div class="author-box" style="padding: 43px 50px 50px 43px;">
+                                <div class="shape">
+                                    <div class="shape-1" style="background-image: url(/static/assets/img/shape/shape-73.png);"></div>
+                                    <div class="shape-2" style="background-image: url(/static/assets/img/shape/shape-74.png);"></div>
+                                </div>
+                                <div class="inner" style="text-align: center;">
+                                    <p style="font-weight:bold; color: #06194b;">{{get_message.message}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+
+
+    <!-- contact-style-two -->
+    <section class="contact-style-two sec-pad">
+        <div class="auto-container">
+            <div class="sec-title centred">
+                <h6>One message away...</h6>
+                <h2>Have Any Question, Contact With Us.</h2> 
+            </div>
+            <div class="form-inner">
+                <form method="post" action="" id="contact-form" class="default-form">
+                    {{csrf_input}}
+                    <div class="row clearfix">
+                        {# set section #}
+                        <input type="text" value="contact" name="section" style="display: none;">
+
+                        {% for form in form %}
+                            {% if form.name != 'message' %}
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    {{form}}
+                                    {% if form.errors %}
+                                        <label id="{{form.name}}-error" class="error" for="id_{{form.name}}" style="color: #142441; padding-left:8px;">{{form.errors[0]}}</label>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                    {{form}}
+                                    {% if form.errors %}
+                                        <label id="{{form.name}}-error" class="error" for="id_{{form.name}}" style="color: #142441; padding-left:8px;">{{form.errors[0]}}</label>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn centred">
+                            <button class="theme-btn-one" type="submit" name="submit-form">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- contact-style-two end -->
+
+{% endblock pageContent %}
+
+
+{# internal script #}
+{% block pageScript %}
+    <script>
+        let msg = document.getElementById("contact_msg");
+
+        if(msg){
+            // scroll to message
+            msg.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+                
+            });
+
+            // hide message
+            setTimeout(()=>{
+                msg.style.display = "none";
+            }, 6000)
+        }
+    </script>
+{% endblock pageScript %}
