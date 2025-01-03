@@ -125,7 +125,7 @@ class ProfileAdmin(ModelAdmin, ImportExportModelAdmin):
                 }
             )
 
-        if isinstance(db_field, (EncryptedTextField)):
+        elif isinstance(db_field, (EncryptedTextField)):
             kwargs['widget'] = Textarea(
                 attrs={
                     'cols':
