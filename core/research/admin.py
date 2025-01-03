@@ -1,4 +1,6 @@
+from django import forms
 from django.contrib import admin, messages
+from django.utils.safestring import mark_safe
 from unfold.admin import ModelAdmin
 
 from .models.books import Book
@@ -115,10 +117,10 @@ class JournalAdmin(ModelAdmin):
 
 
 class ProjectAdmin(ModelAdmin):
-    list_display = ['title', 'innovators', 'category', 'tags', 'status', 'publish', 'date_updated']
-    list_display_links = ['title', 'innovators', 'category', 'date_updated']
+    list_display = ['title', 'category', 'tags', 'status', 'publish', 'date_updated']
+    list_display_links = ['title', 'category', 'date_updated']
     list_filter = ['publish', 'category', 'status']
-    search_fields = ['title', 'innovators', 'category', 'tags']
+    search_fields = ['title', 'other_innovators', 'category', 'tags']
     readonly_fields = ['project_id']
     list_per_page = 50
     show_full_result_count = True
@@ -134,31 +136,75 @@ class ProjectAdmin(ModelAdmin):
             'Project Info',
             {
                 'classes': ['wide'],
-                'fields': ['project_id', 'innovators', 'title', 'category', 'tags', 'status'],
+                'fields': ['project_id', 'title', 'author', 'category', 'tags', 'status'],
             },
         ],
         [
             'Project Details',
             {
                 'classes': ['collapse', 'wide'],
-                'fields': ['about'],
+                'fields': ['project_description_one', 'project_description_two'],
             },
         ],
         [
-            'Media Info',
+            'Other Project Innovators',
             {
                 'classes': ['collapse', 'wide'],
-                'fields': ['image', 'gallery_image_1', 'gallery_image_2', 'gallery_image_3', 'gallery_image_4'],
+                'fields': [
+                    'other_innovators', 'other_innovator_image_1', 'other_innovator_image_2',
+                    'other_innovator_image_3', 'other_innovator_image_4'
+                ],
+            },
+        ],
+        [
+            'Gallery',
+            {
+                'classes': ['collapse', 'wide'],
+                'fields': [
+                    'image', 'gallery_image_1', 'gallery_image_2', 'gallery_image_3', 'gallery_image_4',
+                    'gallery_image_5', 'gallery_image_6'
+                ],
             },
         ],
         [
             'Publish/Timestamp',
             {
                 'classes': ['collapse', 'wide'],
-                'fields': ['publish', 'schedule_publish', 'date_updated'],
+                'fields': ['publish', 'post_scheduling', 'date_updated'],
             },
         ],
     ]
+
+    # override field
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        if db_field.name == 'category':
+            # redeclare label with a class
+            label = mark_safe(
+                f'<label class="font-medium mb-2 text-gray-900 text-sm dark:text-gray-200">{db_field.verbose_name}</label>'  # noqa: E501
+            )
+            # Override the status field to use MultipleChoiceField with SelectMultiple widget
+            kwargs['widget'] = forms.SelectMultiple(
+                attrs={
+                    'class':
+                        'border bg-white font-medium min-w-20 rounded-md shadow-sm text-gray-500 text-sm focus:ring focus:ring-primary-300 focus:border-primary-600 focus:outline-none group-[.errors]:border-red-600 group-[.errors]:focus:ring-red-200 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:focus:border-primary-600 dark:focus:ring-primary-700 dark:focus:ring-opacity-50 dark:group-[.errors]:border-red-500 dark:group-[.errors]:focus:ring-red-600/40 px-3 py-2 w-full pr-8 max-w-2xl appearance-none',  # noqa: E501
+                    'style':
+                        'height: 120px;'  # Set the height for the select field
+                }
+            )
+            kwargs['choices'] = [
+                ('Research', 'Research'),
+                ('Innovation', 'Innovation'),
+                ('Teaching and Learning', 'Teaching and Learning'),
+                ('Patents', 'Patents'),
+                ('Collaboration', 'Collaboration'),
+                ('Grants and Funding', 'Grants and Funding'),
+            ]
+            kwargs['label'] = label
+            kwargs['help_text'] = db_field.help_text
+            kwargs['initial'] = ['Research']
+
+            return forms.MultipleChoiceField(**kwargs)
+        return super().formfield_for_dbfield(db_field, request, **kwargs)
 
 
 # register model
