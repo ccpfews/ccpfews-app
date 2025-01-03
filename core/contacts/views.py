@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.http import HttpResponsePermanentRedirect, JsonResponse
+from django.urls import reverse_lazy
 from django.views.generic import View
 from django.views.generic.edit import CreateView
 
@@ -12,7 +13,11 @@ from .forms import UserConsultationForm, UserContactForm
 class ContactPage(CreateView):
     model = Contact
     form_class = UserContactForm
+    success_url = 'contact'
     template_name = 'pages/contact.html'
+
+    def get_success_url(self):
+        return super().get_success_url()
 
     def post(self, request, *args, **kwargs):
         form = UserContactForm(request.POST)
@@ -27,7 +32,7 @@ class ContactPage(CreateView):
                 request, 'Message sent successfully. A representative would respond to your mail with 48hrs.'
             )
 
-            return HttpResponsePermanentRedirect(self.request.path_info)
+            return HttpResponsePermanentRedirect(reverse_lazy(self.success_url))
 
         #  Set object to None, since class-based view expects model record object
         self.object = None
