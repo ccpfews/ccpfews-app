@@ -6,8 +6,15 @@
         .text p{
             text-align: justify !important;
         }
+
+        @media(max-width: 766px){
+            .team-img {
+                height: 400px !important;
+            }
+        }
     </style>
 {% endblock pageStyle %}
+
 
 {% block pageContent %} 
 
@@ -26,7 +33,7 @@
                                     <div class="shape-3 rotate-me" style="background-image: url(/static/assets/img/shape/shape-10.png);"></div>
                                     <div class="shape-4"></div>
                                 </div>
-                                <figure class="image"><img src="{{ profile.image.url }}" alt="{{profile.first_name}} image" style="width: 522px; height:716px;"></figure>
+                                <figure class="image"><img class="team-img" src="{{ profile.image.url }}" alt="{{profile.first_name}} image" style="width: 522px; height:716px;"></figure>
                             </div>
                         </div>
                     </div>

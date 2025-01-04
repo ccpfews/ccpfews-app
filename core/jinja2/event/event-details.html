@@ -6,6 +6,17 @@
         .text p{
             text-align: justify !important;
         }
+        @media(max-width: 766px){
+            .event-img img {
+                height: 250px !important;
+                margin-top: 75px;
+            }
+
+            .gallery-img{
+                width: 100% !important;
+                height: 200px !important;
+            }
+        }
     </style>
 {% endblock pageStyle %}
 
@@ -19,7 +30,7 @@
                     <div class="col-lg-9 col-md-12 col-sm-12 content-side">
                         <div class="event-details-content">
                             <div class="content-one">
-                                <figure class="image"><img src="{{ event.featured_image.url }}" alt="event featured image"></figure>
+                                <figure class="image event-img"><img src="{{ event.featured_image.url }}" alt="event featured image" style="width: 830px; height:492px;"></figure>
                                 <div class="text">
                                     <h3>{{event.title}}</h3>
                                     <p class="black-text">
@@ -33,32 +44,32 @@
                                         <div class="row clearfix">
                                             {% if event.gallery_image_1 %}
                                                 <div class="{% if event.gallery_image_2 %}col-lg-4 col-md-6 col-sm-12 image-column{% else %} col-lg-12 col-md-12 col-sm-12 image-column{% endif %}">
-                                                    <figure class="image"><img src="{{ event.gallery_image_1.url }}" alt="gallery image 1" style="width: 263px; height:200px;"></figure>
+                                                    <figure class="image"><img class="gallery-img" src="{{ event.gallery_image_1.url }}" alt="gallery image 1" style="width: 263px; height:200px;"></figure>
                                                 </div>
                                             {% endif %}
                                             {% if event.gallery_image_2 %}
                                                 <div class="col-lg-4 col-md-6 col-sm-12 image-column">
-                                                    <figure class="image"><img src="{{ event.gallery_image_2.url }}" alt="gallery image 2" style="width: 263px; height:200px;"></figure>
+                                                    <figure class="image"><img class="gallery-img" src="{{ event.gallery_image_2.url }}" alt="gallery image 2" style="width: 263px; height:200px;"></figure>
                                                 </div>
                                             {% endif %}
                                             {% if event.gallery_image_3 %}
                                                 <div class="col-lg-4 col-md-6 col-sm-12 image-column">
-                                                    <figure class="image"><img src="{{ event.gallery_image_3.url }}" alt="gallery image 3" style="width: 263px; height:200px;"></figure>
+                                                    <figure class="image"><img class="gallery-img" src="{{ event.gallery_image_3.url }}" alt="gallery image 3" style="width: 263px; height:200px;"></figure>
                                                 </div>
                                             {% endif %}
                                             {% if event.gallery_image_4 %}
                                                 <div class="col-lg-4 col-md-6 col-sm-12 image-column">
-                                                    <figure class="image"><img src="{{ event.gallery_image_4.url }}" alt="gallery image 4" style="width: 263px; height:200px;"></figure>
+                                                    <figure class="image"><img class="gallery-img" src="{{ event.gallery_image_4.url }}" alt="gallery image 4" style="width: 263px; height:200px;"></figure>
                                                 </div>
                                             {% endif %}
                                             {% if event.gallery_image_5 %}
                                                 <div class="col-lg-4 col-md-6 col-sm-12 image-column">
-                                                    <figure class="image"><img src="{{ event.gallery_image_5.url }}" alt="gallery image 5" style="width: 263px; height:200px;"></figure>
+                                                    <figure class="image"><img class="gallery-img" src="{{ event.gallery_image_5.url }}" alt="gallery image 5" style="width: 263px; height:200px;"></figure>
                                                 </div>
                                             {% endif %}
                                             {% if event.gallery_image_6 %}
                                                 <div class="col-lg-4 col-md-6 col-sm-12 image-column">
-                                                    <figure class="image"><img src="{{ event.gallery_image_6.url }}" alt="gallery image 6" style="width: 263px; height:200px;"></figure>
+                                                    <figure class="image"><img class="gallery-img" src="{{ event.gallery_image_6.url }}" alt="gallery image 6" style="width: 263px; height:200px;"></figure>
                                                 </div>
                                             {% endif %}
                                         </div>

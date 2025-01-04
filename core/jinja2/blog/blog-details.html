@@ -7,6 +7,11 @@
         .text p{
             text-align: justify !important;
         }
+        @media(max-width: 766px){
+            .blog-img {
+                height: 250px !important;
+            }
+        }
     </style>
 {% endblock pageStyle %}
 
@@ -58,7 +63,7 @@
                             </div>
                         </div>
                         <div class="content-one">
-                            <figure class="image"><img src="{{ blog.featured_image.url }}" alt="{{blog.title}}" style="width: 100%; height: 470px;"></figure>
+                            <figure class="image"><img class="blog-img" src="{{ blog.featured_image.url }}" alt="{{blog.title}}" style="width: 100%; height: 470px;"></figure>
                             <div class="text">
                                 <p>{{blog.post_one|replace('<p></p>', '<br>')}}</p>
                             </div>

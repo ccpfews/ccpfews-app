@@ -3,6 +3,18 @@
 {# body class #}
 {% block bodyClass %}events-page{% endblock bodyClass %}
 
+{# internal style #}
+{% block pageStyle %}
+    <style>
+        @media(max-width: 766px){
+            .pagination-wrapper {
+                margin-top: -40px !important;
+            }
+        }
+    </style>
+{% endblock pageStyle %}
+
+
 
 {% block pageContent %}      
     <!-- team-style-three -->
