@@ -17,7 +17,7 @@
                 <ul class="recent-searches">
                     {% set get_search_session = request.session.get('search_list') %}
                     {% for search in get_search_session %}
-                        <li><a href="/research/projects?search={{search}}/">{{search}}</a></li>
+                        <li><a href="/research/projects?search={{search}}">{{search}}</a></li>
                     {% endfor %}
                 </ul>
             {% endif %}
