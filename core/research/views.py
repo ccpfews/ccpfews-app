@@ -53,9 +53,9 @@ class ProjectView(ListView):
             # update query
             query = self.model.objects.filter(
                 Q(post_scheduling__lte=current_timestamp) & Q(publish=True) & (
-                    Q(title__icontains=search) | Q(category__icontains=search) |
-                    Q(other_innovators__icontains=search) | Q(author__first_name__icontains=search) |
-                    Q(status__icontains=search)
+                    Q(title__icontains=search) | Q(project_description_one__icontains=search) |
+                    Q(category__icontains=search) | Q(other_innovators__icontains=search) | Q(tags__icontains=search) |
+                    Q(author__first_name__icontains=search) | Q(status__icontains=search)
                 )
             ).annotate(
                 priority=Case(
