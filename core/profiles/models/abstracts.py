@@ -8,7 +8,7 @@ research_type = (
     ('Undergraduate', 'Undergraduate'),
     ('Graduate', 'Graduate'),
     ('Masters', 'Masters'),
-    ('PHD', 'PHD'),
+    ('PhD', 'PhD'),
     ('Post Doctorate', 'Post Doctorate'),
 )
 
